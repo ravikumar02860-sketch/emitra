@@ -14,8 +14,9 @@ export const PasswordGenerator = () => {
     symbols: true
   });
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const generate = () => {
+  const generate = async () => {
     const charset = {
       upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
       lower: 'abcdefghijklmnopqrstuvwxyz',
@@ -23,19 +24,26 @@ export const PasswordGenerator = () => {
       symbols: '!@#$%^&*()_+~`|}{[]:;?><,./-='
     };
     
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 400));
+
     let characters = '';
     if (options.upper) characters += charset.upper;
     if (options.lower) characters += charset.lower;
     if (options.numbers) characters += charset.numbers;
     if (options.symbols) characters += charset.symbols;
 
-    if (!characters) return;
+    if (!characters) {
+      setIsProcessing(false);
+      return;
+    }
 
     let result = '';
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     setPassword(result);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -92,9 +100,11 @@ export const PasswordGenerator = () => {
 
       <button 
         onClick={generate}
-        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all"
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all disabled:opacity-50"
       >
-        <RefreshCw size={20} /> Generate Secure Password
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : <RefreshCw size={20} />}
+        {isProcessing ? 'Generating...' : 'Generate Secure Password'}
       </button>
     </div>
   );
@@ -165,9 +175,13 @@ export const BMICalculator = () => {
 export const AgeCalculator = () => {
   const [birthDate, setBirthDate] = useState('');
   const [age, setAge] = useState<{ years: number, months: number, days: number } | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const calculate = () => {
+  const calculate = async () => {
     if (!birthDate) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const birth = new Date(birthDate);
     const now = new Date();
     
@@ -186,6 +200,7 @@ export const AgeCalculator = () => {
     }
 
     setAge({ years, months, days });
+    setIsProcessing(false);
   };
 
   return (
@@ -201,10 +216,11 @@ export const AgeCalculator = () => {
       </div>
       <button 
         onClick={calculate}
-        disabled={!birthDate}
-        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all disabled:opacity-50"
+        disabled={!birthDate || isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
       >
-        Calculate Age
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : null}
+        {isProcessing ? 'Calculating...' : 'Calculate Age'}
       </button>
 
       {age && (
@@ -294,8 +310,12 @@ export const DateCalculator = () => {
   const [mode, setMode] = useState<'diff' | 'add'>('diff');
   const [daysToAdd, setDaysToAdd] = useState(30);
   const [result, setResult] = useState<any>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const calculateDiff = () => {
+  const calculateDiff = async () => {
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffTime = Math.abs(end.getTime() - start.getTime());
@@ -307,13 +327,18 @@ export const DateCalculator = () => {
     const weeks = Math.floor(diffDays / 7);
 
     setResult({ diffDays, years, months, remainingDays, weeks });
+    setIsProcessing(false);
   };
 
-  const calculateAdd = () => {
+  const calculateAdd = async () => {
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const start = new Date(startDate);
     const end = new Date(start);
     end.setDate(start.getDate() + daysToAdd);
     setResult({ end: end.toISOString().split('T')[0] });
+    setIsProcessing(false);
   };
 
   return (
@@ -376,9 +401,11 @@ export const DateCalculator = () => {
 
       <button 
         onClick={mode === 'diff' ? calculateDiff : calculateAdd}
-        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
       >
-        <Calendar size={20} /> {mode === 'diff' ? 'Calculate Difference' : 'Calculate New Date'}
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : <Calendar size={20} />}
+        {isProcessing ? 'Calculating...' : (mode === 'diff' ? 'Calculate Difference' : 'Calculate New Date')}
       </button>
 
       {result && (

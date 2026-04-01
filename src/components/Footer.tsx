@@ -75,8 +75,12 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-slate-800 text-center text-slate-500 text-xs">
+      <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-slate-800 text-center text-slate-500 text-xs space-y-4">
         <p>{t('footer.rights')}</p>
+        <div className="flex justify-center gap-4">
+          <a href="/sitemap.xml" className="hover:text-white transition-colors">Sitemap</a>
+          <a href="/robots.txt" className="hover:text-white transition-colors">Robots.txt</a>
+        </div>
       </div>
     </footer>
   );

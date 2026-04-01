@@ -48,8 +48,13 @@ export const WordCounter = () => {
 export const CaseConverter = () => {
   const [text, setText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const convert = (type: string) => {
+  const convert = async (type: string) => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 400));
+
     let newText = text;
     switch (type) {
       case 'upper': newText = text.toUpperCase(); break;
@@ -58,6 +63,7 @@ export const CaseConverter = () => {
       case 'sentence': newText = text.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase()); break;
     }
     setText(newText);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -86,10 +92,10 @@ export const CaseConverter = () => {
       </div>
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-wrap gap-2 flex-grow p-2 bg-slate-50 rounded-2xl border border-slate-100">
-          <button onClick={() => convert('upper')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">UPPERCASE</button>
-          <button onClick={() => convert('lower')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">lowercase</button>
-          <button onClick={() => convert('title')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">Title Case</button>
-          <button onClick={() => convert('sentence')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">Sentence case</button>
+          <button disabled={isProcessing} onClick={() => convert('upper')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">UPPERCASE</button>
+          <button disabled={isProcessing} onClick={() => convert('lower')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">lowercase</button>
+          <button disabled={isProcessing} onClick={() => convert('title')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">Title Case</button>
+          <button disabled={isProcessing} onClick={() => convert('sentence')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">Sentence case</button>
         </div>
         <button onClick={copy} className="flex items-center justify-center gap-3 px-10 py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
           {copied ? <Check size={20} /> : <Copy size={20} />}
@@ -105,8 +111,12 @@ export const LoremIpsumGenerator = () => {
   const [type, setType] = useState('paragraphs');
   const [result, setResult] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const generate = () => {
+  const generate = async () => {
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
     const sentences = text.split('. ');
     
@@ -119,6 +129,7 @@ export const LoremIpsumGenerator = () => {
       output = text.split(' ').slice(0, count).join(' ') + '.';
     }
     setResult(output);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -153,8 +164,19 @@ export const LoremIpsumGenerator = () => {
         </div>
       </div>
       
-      <button onClick={generate} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-        Generate Lorem Ipsum
+      <button 
+        onClick={generate} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
+      >
+        {isProcessing ? (
+          <>
+            <Loader2 size={20} className="animate-spin" />
+            Generating...
+          </>
+        ) : (
+          'Generate Lorem Ipsum'
+        )}
       </button>
 
       {result && (
@@ -222,11 +244,17 @@ export const TextToSpeech = () => {
 export const RemoveDuplicateLines = () => {
   const [text, setText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const process = () => {
+  const process = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const lines = text.split('\n');
     const uniqueLines = Array.from(new Set(lines));
     setText(uniqueLines.join('\n'));
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -254,8 +282,13 @@ export const RemoveDuplicateLines = () => {
         )}
       </div>
       <div className="flex flex-col sm:flex-row gap-4">
-        <button onClick={process} className="flex-grow py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all">
-          <Trash2 size={20} /> Remove Duplicates
+        <button 
+          onClick={process} 
+          disabled={isProcessing}
+          className="flex-grow py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all disabled:opacity-50"
+        >
+          {isProcessing ? <Loader2 size={20} className="animate-spin" /> : <Trash2 size={20} />}
+          {isProcessing ? 'Processing...' : 'Remove Duplicates'}
         </button>
         <button onClick={copy} className="px-10 py-5 bg-white border border-slate-200 rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-slate-50 hover:border-indigo-200 flex items-center justify-center gap-3 active:scale-[0.98] transition-all text-slate-600 shadow-sm">
           {copied ? <Check size={20} className="text-emerald-500" /> : <Copy size={20} className="text-slate-400" />}
@@ -269,13 +302,19 @@ export const RemoveDuplicateLines = () => {
 export const ReverseText = () => {
   const [text, setText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const process = (mode: 'chars' | 'words' | 'lines') => {
+  const process = async (mode: 'chars' | 'words' | 'lines') => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 400));
+
     let result = '';
     if (mode === 'chars') result = text.split('').reverse().join('');
     else if (mode === 'words') result = text.split(' ').reverse().join(' ');
     else result = text.split('\n').reverse().join('\n');
     setText(result);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -304,9 +343,9 @@ export const ReverseText = () => {
       </div>
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-wrap gap-2 flex-grow p-2 bg-slate-50 rounded-2xl border border-slate-100">
-          <button onClick={() => process('chars')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">Reverse Chars</button>
-          <button onClick={() => process('words')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">Reverse Words</button>
-          <button onClick={() => process('lines')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all">Reverse Lines</button>
+          <button disabled={isProcessing} onClick={() => process('chars')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">Reverse Chars</button>
+          <button disabled={isProcessing} onClick={() => process('words')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">Reverse Words</button>
+          <button disabled={isProcessing} onClick={() => process('lines')} className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-[10px] uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:border-indigo-200 active:scale-95 transition-all disabled:opacity-50">Reverse Lines</button>
         </div>
         <button onClick={copy} className="flex items-center justify-center gap-3 px-10 py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
           {copied ? <Check size={20} /> : <Copy size={20} />}
@@ -321,8 +360,12 @@ export const BinaryConverter = () => {
   const [text, setText] = useState('');
   const [binary, setBinary] = useState('');
   const [mode, setMode] = useState<'t2b' | 'b2t'>('t2b');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const convert = () => {
+  const convert = async () => {
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
     try {
       if (mode === 't2b') {
         const res = text.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
@@ -332,7 +375,9 @@ export const BinaryConverter = () => {
         setText(res);
       }
     } catch (err) {
-      alert('Invalid input');
+      // Error handled silently or via UI
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -362,18 +407,36 @@ export const BinaryConverter = () => {
             className="w-full h-48 p-6 bg-slate-50 border border-slate-200 rounded-3xl outline-none focus:ring-2 focus:ring-indigo-500 font-medium text-slate-700 resize-none transition-all"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 relative group">
           <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Binary Output</label>
           <textarea 
             value={binary} onChange={(e) => setBinary(e.target.value)}
             placeholder="01001000 01100101..."
             className="w-full h-48 p-6 bg-slate-50 border border-slate-200 rounded-3xl outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-sm text-indigo-600 resize-none transition-all"
           />
+          {binary && (
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(binary);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="absolute right-4 bottom-4 flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl font-bold text-sm hover:bg-slate-50 shadow-lg active:scale-95 transition-all text-indigo-600"
+            >
+              {copied ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
+              {copied ? 'Copied!' : 'Copy Result'}
+            </button>
+          )}
         </div>
       </div>
 
-      <button onClick={convert} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all">
-        <Binary size={20} /> Convert Data
+      <button 
+        onClick={convert} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100 active:scale-[0.98] transition-all disabled:opacity-50"
+      >
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : <Binary size={20} />}
+        {isProcessing ? 'Processing...' : 'Convert Data'}
       </button>
     </div>
   );
@@ -383,24 +446,35 @@ export const JsonFormatter = () => {
   const [text, setText] = useState('');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const format = () => {
+  const format = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
     try {
       const obj = JSON.parse(text);
       setText(JSON.stringify(obj, null, 2));
       setError('');
     } catch (err) {
       setError('Invalid JSON');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  const minify = () => {
+  const minify = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
     try {
       const obj = JSON.parse(text);
       setText(JSON.stringify(obj));
       setError('');
     } catch (err) {
       setError('Invalid JSON');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -442,11 +516,21 @@ export const JsonFormatter = () => {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <button onClick={format} className="py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-          Beautify JSON
+        <button 
+          onClick={format} 
+          disabled={isProcessing}
+          className="py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+        >
+          {isProcessing ? <Loader2 size={18} className="animate-spin" /> : null}
+          {isProcessing ? 'Processing...' : 'Beautify JSON'}
         </button>
-        <button onClick={minify} className="py-5 bg-white border border-slate-200 text-slate-600 rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-slate-50 hover:border-indigo-200 transition-all active:scale-[0.98] shadow-sm">
-          Minify JSON
+        <button 
+          onClick={minify} 
+          disabled={isProcessing}
+          className="py-5 bg-white border border-slate-200 text-slate-600 rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-slate-50 hover:border-indigo-200 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
+        >
+          {isProcessing ? <Loader2 size={18} className="animate-spin" /> : null}
+          {isProcessing ? 'Processing...' : 'Minify JSON'}
         </button>
       </div>
     </div>
@@ -456,8 +540,13 @@ export const JsonFormatter = () => {
 export const SqlFormatter = () => {
   const [text, setText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const format = () => {
+  const format = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     // Simple SQL formatter logic (very basic)
     const keywords = ['SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'GROUP BY', 'ORDER BY', 'INSERT INTO', 'UPDATE', 'DELETE', 'SET', 'VALUES', 'JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'ON', 'LIMIT'];
     let formatted = text.replace(/\s+/g, ' ').trim();
@@ -468,6 +557,7 @@ export const SqlFormatter = () => {
     });
 
     setText(formatted.trim());
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -500,8 +590,13 @@ export const SqlFormatter = () => {
         </div>
       </div>
 
-      <button onClick={format} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-        Format SQL Query
+      <button 
+        onClick={format} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
+      >
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : null}
+        {isProcessing ? 'Formatting...' : 'Format SQL Query'}
       </button>
     </div>
   );
@@ -511,11 +606,17 @@ export const ExtractEmails = () => {
   const [text, setText] = useState('');
   const [emails, setEmails] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const extract = () => {
+  const extract = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 600));
+
     const regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
     const found = text.match(regex) || [];
     setEmails([...new Set(found)]);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -543,8 +644,13 @@ export const ExtractEmails = () => {
         )}
       </div>
 
-      <button onClick={extract} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-        Extract Emails
+      <button 
+        onClick={extract} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
+      >
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : null}
+        {isProcessing ? 'Extracting...' : 'Extract Emails'}
       </button>
 
       {emails.length > 0 && (
@@ -576,11 +682,17 @@ export const ExtractURLs = () => {
   const [text, setText] = useState('');
   const [urls, setUrls] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const extract = () => {
+  const extract = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 600));
+
     const regex = /https?:\/\/[^\s/$.?#].[^\s]*/g;
     const found = text.match(regex) || [];
     setUrls([...new Set(found)]);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -608,8 +720,13 @@ export const ExtractURLs = () => {
         )}
       </div>
 
-      <button onClick={extract} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-        Extract URLs
+      <button 
+        onClick={extract} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
+      >
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : null}
+        {isProcessing ? 'Extracting...' : 'Extract URLs'}
       </button>
 
       {urls.length > 0 && (
@@ -641,6 +758,7 @@ export const TextToMorse = () => {
   const [text, setText] = useState('');
   const [morse, setMorse] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const morseCode: { [key: string]: string } = {
     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
@@ -650,9 +768,14 @@ export const TextToMorse = () => {
     '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----', ' ': '/'
   };
 
-  const convert = () => {
+  const convert = async () => {
+    if (!text.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const result = text.toUpperCase().split('').map(char => morseCode[char] || char).join(' ');
     setMorse(result);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -680,8 +803,13 @@ export const TextToMorse = () => {
         )}
       </div>
 
-      <button onClick={convert} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-        Convert to Morse
+      <button 
+        onClick={convert} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
+      >
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : null}
+        {isProcessing ? 'Converting...' : 'Convert to Morse'}
       </button>
 
       {morse && (
@@ -707,6 +835,7 @@ export const MorseToText = () => {
   const [morse, setMorse] = useState('');
   const [text, setText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const morseToChar: { [key: string]: string } = {
     '.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E', '..-.': 'F', '--.': 'G', '....': 'H',
@@ -716,9 +845,14 @@ export const MorseToText = () => {
     '-....': '6', '--...': '7', '---..': '8', '----.': '9', '-----': '0', '/': ' '
   };
 
-  const convert = () => {
+  const convert = async () => {
+    if (!morse.trim()) return;
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const result = morse.trim().split(/\s+/).map(code => morseToChar[code] || '?').join('');
     setText(result);
+    setIsProcessing(false);
   };
 
   const copy = () => {
@@ -746,8 +880,13 @@ export const MorseToText = () => {
         )}
       </div>
 
-      <button onClick={convert} className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98]">
-        Convert to Text
+      <button 
+        onClick={convert} 
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3"
+      >
+        {isProcessing ? <Loader2 size={20} className="animate-spin" /> : null}
+        {isProcessing ? 'Converting...' : 'Convert to Text'}
       </button>
 
       {text && (

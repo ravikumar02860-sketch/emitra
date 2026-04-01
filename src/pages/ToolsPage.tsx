@@ -119,15 +119,15 @@ const ToolsPage = () => {
     { id: 'image-filters', category: 'image', icon: ImageIcon, name: 'Image Filters', desc: 'Apply filters like grayscale, sepia, and blur.' },
     { id: 'image-cropper', category: 'image', icon: Scissors, name: 'Image Cropper', desc: 'Crop images to specific aspect ratios.' },
     { id: 'image-to-text', category: 'image', icon: Type, name: 'Image to Text', desc: 'Extract text from images using OCR.' },
-    { id: 'base64-image', category: 'image', icon: Binary, name: 'Image to Base64', desc: 'Convert images to Base64 strings.' },
+    { id: 'image-to-base64', category: 'image', icon: Binary, name: 'Image to Base64', desc: 'Convert images to Base64 strings.' },
     { id: 'base64-to-image', category: 'image', icon: ImageIcon, name: 'Base64 to Image', desc: 'Convert Base64 strings back to images.' },
 
     // Text Tools
     { id: 'word-counter', category: 'text', icon: Hash, name: 'Word Counter', desc: 'Count words, characters, and lines in your text.' },
     { id: 'case-converter', category: 'text', icon: Type, name: 'Case Converter', desc: 'Change text case (UPPER, lower, Title, etc.).' },
-    { id: 'lorem-ipsum', category: 'text', icon: FileText, name: 'Lorem Ipsum', desc: 'Generate placeholder text for your designs.' },
+    { id: 'lorem-ipsum-generator', category: 'text', icon: FileText, name: 'Lorem Ipsum', desc: 'Generate placeholder text for your designs.' },
     { id: 'text-to-speech', category: 'text', icon: Volume2, name: 'Text to Speech', desc: 'Convert text into spoken audio.' },
-    { id: 'remove-duplicates', category: 'text', icon: Scissors, name: 'Remove Duplicates', desc: 'Remove duplicate lines from your text.' },
+    { id: 'remove-duplicate-lines', category: 'text', icon: Scissors, name: 'Remove Duplicates', desc: 'Remove duplicate lines from your text.' },
     { id: 'reverse-text', category: 'text', icon: RefreshCw, name: 'Reverse Text', desc: 'Flip your text backwards.' },
     { id: 'binary-converter', category: 'text', icon: Binary, name: 'Binary Converter', desc: 'Convert text to binary and vice versa.' },
     { id: 'json-formatter', category: 'text', icon: FileJson, name: 'JSON Formatter', desc: 'Format and minify JSON data.' },
@@ -331,16 +331,16 @@ const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'image-filters': return <ImageFilters />;
     case 'image-cropper': return <ImageCropper />;
     case 'image-to-text': return <ImageToText />;
-    case 'base64-image': return <ImageToBase64 />;
+    case 'image-to-base64': return <ImageToBase64 />;
     case 'base64-to-image': return <Base64ToImage />;
     case 'qr-generator': return <QRGenerator />;
 
     // Text Tools
     case 'word-counter': return <WordCounter />;
     case 'case-converter': return <CaseConverter />;
-    case 'lorem-ipsum': return <LoremIpsumGenerator />;
+    case 'lorem-ipsum-generator': return <LoremIpsumGenerator />;
     case 'text-to-speech': return <TextToSpeech />;
-    case 'remove-duplicates': return <RemoveDuplicateLines />;
+    case 'remove-duplicate-lines': return <RemoveDuplicateLines />;
     case 'reverse-text': return <ReverseText />;
     case 'binary-converter': return <BinaryConverter />;
     case 'json-formatter': return <JsonFormatter />;

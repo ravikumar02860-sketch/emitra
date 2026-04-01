@@ -22,21 +22,43 @@ export const UnitConverter = () => {
     else { setFrom('c'); setTo('f'); }
   }, [type]);
 
-  const convert = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [result, setResult] = useState<string>('0.0010');
+
+  const convert = async () => {
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    let finalResult = '';
     if (type === 'temp') {
       let c = value;
       if (from === 'f') c = (value - 32) * 5/9;
       if (from === 'k') c = value - 273.15;
       
-      if (to === 'c') return c.toFixed(2);
-      if (to === 'f') return (c * 9/5 + 32).toFixed(2);
-      if (to === 'k') return (c + 273.15).toFixed(2);
-      return value;
+      if (to === 'c') finalResult = c.toFixed(2);
+      else if (to === 'f') finalResult = (c * 9/5 + 32).toFixed(2);
+      else if (to === 'k') finalResult = (c + 273.15).toFixed(2);
+      else finalResult = value.toString();
+    } else {
+      const fromRate = units[type][from as keyof typeof units.length] as number;
+      const toRate = units[type][to as keyof typeof units.length] as number;
+      finalResult = ((value * fromRate) / toRate).toFixed(4);
     }
-    const fromRate = units[type][from as keyof typeof units.length];
-    const toRate = units[type][to as keyof typeof units.length];
-    return ((value * fromRate) / toRate).toFixed(4);
+    setResult(finalResult);
+    setIsProcessing(false);
   };
+
+  const copyResult = () => {
+    navigator.clipboard.writeText(result);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Trigger conversion on input change
+  React.useEffect(() => {
+    convert();
+  }, [value, type, from, to]);
 
   return (
     <div className="space-y-8 max-w-md mx-auto">
@@ -72,7 +94,22 @@ export const UnitConverter = () => {
       <div className="bg-indigo-600 p-10 rounded-[40px] text-center shadow-2xl shadow-indigo-100 relative overflow-hidden group">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(255,255,255,0.2),transparent)] pointer-events-none" />
         <div className="text-[10px] font-black text-indigo-200 uppercase tracking-[0.3em] mb-2">Converted Result</div>
-        <div className="text-4xl sm:text-5xl font-black text-white tracking-tighter">{convert()} <span className="text-indigo-200 text-2xl">{to.toUpperCase()}</span></div>
+        <div className="text-4xl sm:text-5xl font-black text-white tracking-tighter flex items-center justify-center gap-4">
+          {isProcessing ? (
+            <RefreshCw size={40} className="animate-spin text-indigo-300" />
+          ) : (
+            <>
+              {result} <span className="text-indigo-200 text-2xl">{to.toUpperCase()}</span>
+            </>
+          )}
+        </div>
+        
+        <button 
+          onClick={copyResult}
+          className="mt-6 px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-xs transition-all flex items-center gap-2 mx-auto border border-white/10"
+        >
+          {copied ? 'Copied!' : 'Copy Result'}
+        </button>
       </div>
     </div>
   );
@@ -82,8 +119,15 @@ export const JsonCsvConverter = ({ mode }: { mode: 'json-to-csv' | 'csv-to-json'
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const convert = () => {
+  const convert = async () => {
+    if (!input.trim()) return;
+    setIsProcessing(true);
+    
+    // Simulate processing for better UX
+    await new Promise(resolve => setTimeout(resolve, 600));
+
     try {
       if (mode === 'json-to-csv') {
         const json = JSON.parse(input);
@@ -96,7 +140,8 @@ export const JsonCsvConverter = ({ mode }: { mode: 'json-to-csv' | 'csv-to-json'
         ].join('\r\n');
         setOutput(csv);
       } else {
-        const lines = input.split('\n');
+        const lines = input.split('\n').filter(l => l.trim());
+        if (lines.length < 2) throw new Error('Insufficient data');
         const header = lines[0].split(',');
         const json = lines.slice(1).map(line => {
           const values = line.split(',');
@@ -109,6 +154,8 @@ export const JsonCsvConverter = ({ mode }: { mode: 'json-to-csv' | 'csv-to-json'
       }
     } catch (err) {
       setOutput('Error: Invalid input format');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -146,9 +193,20 @@ export const JsonCsvConverter = ({ mode }: { mode: 'json-to-csv' | 'csv-to-json'
       </div>
       <button 
         onClick={convert}
-        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-lg shadow-indigo-100 active:scale-95 transition-all"
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-lg shadow-indigo-100 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <RefreshCw size={20} /> Convert Data
+        {isProcessing ? (
+          <>
+            <RefreshCw size={20} className="animate-spin" />
+            Processing...
+          </>
+        ) : (
+          <>
+            <RefreshCw size={20} />
+            Convert Data
+          </>
+        )}
       </button>
     </div>
   );
@@ -158,8 +216,15 @@ export const XmlJsonConverter = ({ mode }: { mode: 'xml-to-json' | 'json-to-xml'
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const convert = () => {
+  const convert = async () => {
+    if (!input.trim()) return;
+    setIsProcessing(true);
+    
+    // Simulate processing for better UX
+    await new Promise(resolve => setTimeout(resolve, 600));
+
     try {
       if (mode === 'xml-to-json') {
         const result = xml2json(input, { compact: true, spaces: 2 });
@@ -170,6 +235,8 @@ export const XmlJsonConverter = ({ mode }: { mode: 'xml-to-json' | 'json-to-xml'
       }
     } catch (err) {
       setOutput('Error: Invalid input format');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -207,9 +274,20 @@ export const XmlJsonConverter = ({ mode }: { mode: 'xml-to-json' | 'json-to-xml'
       </div>
       <button 
         onClick={convert}
-        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-lg shadow-indigo-100 active:scale-95 transition-all"
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-lg shadow-indigo-100 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <RefreshCw size={20} /> Convert Data
+        {isProcessing ? (
+          <>
+            <RefreshCw size={20} className="animate-spin" />
+            Processing...
+          </>
+        ) : (
+          <>
+            <RefreshCw size={20} />
+            Convert Data
+          </>
+        )}
       </button>
     </div>
   );
@@ -218,14 +296,21 @@ export const XmlJsonConverter = ({ mode }: { mode: 'xml-to-json' | 'json-to-xml'
 export const Base64ToImage = () => {
   const [base64, setBase64] = useState('');
   const [image, setImage] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const convert = () => {
+  const convert = async () => {
     if (!base64.trim()) return;
+    setIsProcessing(true);
+    
+    // Simulate processing for better UX
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     let finalBase64 = base64.trim();
     if (!finalBase64.startsWith('data:image')) {
       finalBase64 = `data:image/png;base64,${finalBase64}`;
     }
     setImage(finalBase64);
+    setIsProcessing(false);
   };
 
   return (
@@ -240,9 +325,20 @@ export const Base64ToImage = () => {
       </div>
       <button 
         onClick={convert}
-        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-lg shadow-indigo-100 active:scale-95 transition-all"
+        disabled={isProcessing}
+        className="w-full py-5 bg-indigo-600 text-white rounded-3xl font-bold hover:bg-indigo-700 flex items-center justify-center gap-3 shadow-lg shadow-indigo-100 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ImageIcon size={20} /> Preview Image
+        {isProcessing ? (
+          <>
+            <RefreshCw size={20} className="animate-spin" />
+            Processing...
+          </>
+        ) : (
+          <>
+            <ImageIcon size={20} />
+            Preview Image
+          </>
+        )}
       </button>
       {image && (
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-10 bg-slate-50 rounded-[40px] text-center border border-slate-100 shadow-inner">

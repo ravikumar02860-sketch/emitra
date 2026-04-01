@@ -29,6 +29,7 @@ import { useLanguage } from './context/LanguageContext';
 const Home = lazy(() => import('./pages/Home'));
 const FormsSection = lazy(() => import('./components/FormsSection'));
 const ToolsPage = lazy(() => import('./pages/ToolsPage'));
+const ToolSEOPage = lazy(() => import('./pages/ToolSEOPage'));
 
 const ServiceDetail = ({ id, title, icon: Icon, about, who, docs, steps, notes, website, searchQuery }: any) => {
   const { t } = useLanguage();
@@ -544,6 +545,9 @@ function App() {
     content = <ContactPage />;
   } else if (pathname.endsWith('tools.html')) {
     content = <ToolsPage />;
+  } else if (pathname.includes('-tool.html')) {
+    const toolId = pathname.split('/').pop()?.replace('-tool.html', '');
+    content = <ToolSEOPage toolId={toolId} />;
   } else {
     content = <Home />;
   }
