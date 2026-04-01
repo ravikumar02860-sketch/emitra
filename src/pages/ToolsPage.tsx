@@ -21,6 +21,8 @@ import {
   Hash,
   Calculator,
   Clock,
+  Calendar,
+  Link,
   Shield,
   Languages,
   FileJson,
@@ -74,6 +76,8 @@ const MorseToText = lazy(() => import('../components/tools/TextTools').then(modu
 const PasswordGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.PasswordGenerator })));
 const BMICalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.BMICalculator })));
 const AgeCalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.AgeCalculator })));
+const DateCalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.DateCalculator })));
+const URLShortener = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.URLShortener })));
 const QRGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRGenerator })));
 const QRScanner = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRScanner })));
 
@@ -144,6 +148,8 @@ const ToolsPage = () => {
     { id: 'qr-generator', category: 'utility', icon: QrCode, name: 'QR Generator', desc: 'Create custom QR codes for URLs or text.' },
     { id: 'qr-scanner', category: 'utility', icon: Scan, name: 'QR Scanner', desc: 'Scan and decode QR codes from images.' },
     { id: 'age-calc', category: 'utility', icon: Calculator, name: 'Age Calculator', desc: 'Calculate your exact age from birth date.' },
+    { id: 'date-calc', category: 'utility', icon: Calendar, name: 'Date Calculator', desc: 'Calculate difference between dates or add days.' },
+    { id: 'url-shortener', category: 'utility', icon: Link, name: 'URL Shortener', desc: 'Create short, easy to share links.' },
     { id: 'bmi-calc', category: 'utility', icon: Activity, name: 'BMI Calculator', desc: 'Calculate your Body Mass Index.' },
   ], []);
 
@@ -356,6 +362,8 @@ const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'qr-scanner': return <QRScanner />;
     case 'bmi-calc': return <BMICalculator />;
     case 'age-calc': return <AgeCalculator />;
+    case 'date-calc': return <DateCalculator />;
+    case 'url-shortener': return <URLShortener />;
     
     default:
       return (
