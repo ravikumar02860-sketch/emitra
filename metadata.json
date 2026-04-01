@@ -1,0 +1,7 @@
+{
+  "name": "Remix: e-Mitra Bhilwara - Government Forms \u0026 Services",
+  "description": "Quickly find and download Indian and Rajasthan government forms for Aadhaar, PAN, Ration Card, and more. Direct links to PDF search and WhatsApp help.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
