@@ -31,7 +31,16 @@ import {
   Activity,
   Volume2,
   Scan,
-  BookOpen
+  BookOpen,
+  Globe,
+  Code,
+  Share2,
+  Youtube,
+  MessageSquare,
+  Instagram,
+  Lock,
+  CreditCard,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
@@ -73,6 +82,10 @@ const ExtractEmails = lazy(() => import('../components/tools/TextTools').then(mo
 const ExtractURLs = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.ExtractURLs })));
 const TextToMorse = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextToMorse })));
 const MorseToText = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.MorseToText })));
+const TextReplacement = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextReplacement })));
+const TextRepeater = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextRepeater })));
+const WordFrequency = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.WordFrequency })));
+const RemoveEmptyLines = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.RemoveEmptyLines })));
 
 const PasswordGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.PasswordGenerator })));
 const BMICalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.BMICalculator })));
@@ -81,6 +94,39 @@ const DateCalculator = lazy(() => import('../components/tools/UtilityTools').the
 const URLShortener = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.URLShortener })));
 const QRGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRGenerator })));
 const QRScanner = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRScanner })));
+const PercentageCalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.PercentageCalculator })));
+const RandomNumberGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.RandomNumberGenerator })));
+const RandomStringGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.RandomStringGenerator })));
+
+// Web Tools
+const HTMLFormatter = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.HTMLFormatter })));
+const HTMLMinifier = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.HTMLMinifier })));
+const CSSFormatter = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.CSSFormatter })));
+const CSSMinifier = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.CSSMinifier })));
+const JSFormatter = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.JSFormatter })));
+const JSMinifier = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.JSMinifier })));
+const URLEncoder = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.URLEncoder })));
+const URLDecoder = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.URLDecoder })));
+
+// Dev Tools
+const MD5Hash = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.MD5Hash })));
+const SHA256Hash = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.SHA256Hash })));
+const Base64Encoder = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.Base64Encoder })));
+const Base64Decoder = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.Base64Decoder })));
+const JSONtoYAML = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.JSONtoYAML })));
+const YAMLtoJSON = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.YAMLtoJSON })));
+const UUIDGenerator = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.UUIDGenerator })));
+const UnixTimestampConverter = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.UnixTimestampConverter })));
+
+// Social Tools
+const YoutubeThumbnailDownloader = lazy(() => import('../components/tools/SocialTools').then(module => ({ default: module.YoutubeThumbnailDownloader })));
+const WhatsappLinkGenerator = lazy(() => import('../components/tools/SocialTools').then(module => ({ default: module.WhatsappLinkGenerator })));
+const InstagramProfileGenerator = lazy(() => import('../components/tools/SocialTools').then(module => ({ default: module.InstagramProfileGenerator })));
+
+// Security Tools
+const PasswordStrengthMeter = lazy(() => import('../components/tools/SecurityTools').then(module => ({ default: module.PasswordStrengthMeter })));
+const CreditCardValidator = lazy(() => import('../components/tools/SecurityTools').then(module => ({ default: module.CreditCardValidator })));
+const IBANValidator = lazy(() => import('../components/tools/SecurityTools').then(module => ({ default: module.IBANValidator })));
 
 // Tool categories and their icons
 const CATEGORIES = [
@@ -90,6 +136,10 @@ const CATEGORIES = [
   { id: 'text', name: 'Text Tools', icon: Type },
   { id: 'converter', name: 'Converter Tools', icon: RefreshCw },
   { id: 'utility', name: 'Utility Tools', icon: Wrench },
+  { id: 'web', name: 'Web Tools', icon: Globe },
+  { id: 'dev', name: 'Developer Tools', icon: Code },
+  { id: 'social', name: 'Social Media', icon: Share2 },
+  { id: 'security', name: 'Security Tools', icon: Shield },
 ];
 
 const ToolsPage = () => {
@@ -137,6 +187,10 @@ const ToolsPage = () => {
     { id: 'extract-urls', category: 'text', icon: Type, name: 'Extract URLs', desc: 'Extract website links from any text.' },
     { id: 'text-to-morse', category: 'text', icon: Binary, name: 'Text to Morse', desc: 'Convert text to Morse code signals.' },
     { id: 'morse-to-text', category: 'text', icon: Binary, name: 'Morse to Text', desc: 'Convert Morse code back to plain text.' },
+    { id: 'text-replacement', category: 'text', icon: Type, name: 'Text Replacement', desc: 'Find and replace text patterns.' },
+    { id: 'text-repeater', category: 'text', icon: Type, name: 'Text Repeater', desc: 'Repeat text multiple times.' },
+    { id: 'word-frequency', category: 'text', icon: Hash, name: 'Word Frequency', desc: 'Analyze word frequency in text.' },
+    { id: 'remove-empty-lines', category: 'text', icon: Scissors, name: 'Remove Empty Lines', desc: 'Remove all empty lines from text.' },
 
     // Converter Tools
     { id: 'unit-converter', category: 'converter', icon: RefreshCw, name: 'Unit Converter', desc: 'Convert length, weight, and temperature.' },
@@ -152,6 +206,39 @@ const ToolsPage = () => {
     { id: 'date-calc', category: 'utility', icon: Calendar, name: 'Date Calculator', desc: 'Calculate difference between dates or add days.' },
     { id: 'url-shortener', category: 'utility', icon: Link, name: 'URL Shortener', desc: 'Create short, easy to share links.' },
     { id: 'bmi-calc', category: 'utility', icon: Activity, name: 'BMI Calculator', desc: 'Calculate your Body Mass Index.' },
+    { id: 'percentage-calc', category: 'utility', icon: Calculator, name: 'Percentage Calculator', desc: 'Calculate percentages easily.' },
+    { id: 'random-number', category: 'utility', icon: Hash, name: 'Random Number', desc: 'Generate random numbers in a range.' },
+    { id: 'random-string', category: 'utility', icon: Type, name: 'Random String', desc: 'Generate random alphanumeric strings.' },
+
+    // Web Tools
+    { id: 'html-formatter', category: 'web', icon: Code, name: 'HTML Formatter', desc: 'Beautify and format your HTML code.' },
+    { id: 'html-minifier', category: 'web', icon: Minimize, name: 'HTML Minifier', desc: 'Minify HTML to reduce file size.' },
+    { id: 'css-formatter', category: 'web', icon: Code, name: 'CSS Formatter', desc: 'Beautify and format your CSS code.' },
+    { id: 'css-minifier', category: 'web', icon: Minimize, name: 'CSS Minifier', desc: 'Minify CSS to reduce file size.' },
+    { id: 'js-formatter', category: 'web', icon: Code, name: 'JS Formatter', desc: 'Beautify and format your JavaScript code.' },
+    { id: 'js-minifier', category: 'web', icon: Minimize, name: 'JS Minifier', desc: 'Minify JavaScript to reduce file size.' },
+    { id: 'url-encoder', category: 'web', icon: Link, name: 'URL Encoder', desc: 'Safely encode text for URLs.' },
+    { id: 'url-decoder', category: 'web', icon: Link, name: 'URL Decoder', desc: 'Decode URL-encoded text.' },
+
+    // Dev Tools
+    { id: 'md5-hash', category: 'dev', icon: Lock, name: 'MD5 Hash', desc: 'Generate MD5 hash for any text.' },
+    { id: 'sha256-hash', category: 'dev', icon: Lock, name: 'SHA-256 Hash', desc: 'Generate secure SHA-256 hash.' },
+    { id: 'base64-encode', category: 'dev', icon: RefreshCw, name: 'Base64 Encode', desc: 'Convert text to Base64 format.' },
+    { id: 'base64-decode', category: 'dev', icon: RefreshCw, name: 'Base64 Decode', desc: 'Decode Base64 back to text.' },
+    { id: 'json-to-yaml', category: 'dev', icon: FileJson, name: 'JSON to YAML', desc: 'Convert JSON data to YAML format.' },
+    { id: 'yaml-to-json', category: 'dev', icon: FileCode, name: 'YAML to JSON', desc: 'Convert YAML data to JSON format.' },
+    { id: 'uuid-gen', category: 'dev', icon: RefreshCw, name: 'UUID Generator', desc: 'Generate unique random UUIDs.' },
+    { id: 'unix-timestamp', category: 'dev', icon: Calendar, name: 'Unix Timestamp', desc: 'Convert Unix timestamps to dates.' },
+
+    // Social Tools
+    { id: 'yt-thumbnail', category: 'social', icon: Youtube, name: 'YouTube Thumbnail', desc: 'Download YouTube video thumbnails.' },
+    { id: 'wa-link', category: 'social', icon: MessageSquare, name: 'WhatsApp Link', desc: 'Create direct WhatsApp chat links.' },
+    { id: 'ig-profile', category: 'social', icon: Instagram, name: 'Instagram Profile', desc: 'Generate Instagram profile links.' },
+
+    // Security Tools
+    { id: 'password-strength', category: 'security', icon: Shield, name: 'Password Strength', desc: 'Check how secure your password is.' },
+    { id: 'cc-validator', category: 'security', icon: CreditCard, name: 'Card Validator', desc: 'Validate credit card numbers.' },
+    { id: 'iban-validator', category: 'security', icon: Globe, name: 'IBAN Validator', desc: 'Validate international bank accounts.' },
   ], []);
 
   const filteredTools = tools.filter(tool => {
@@ -342,7 +429,6 @@ export const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'image-to-text': return <ImageToText />;
     case 'image-to-base64': return <ImageToBase64 />;
     case 'base64-to-image': return <Base64ToImage />;
-    case 'qr-generator': return <QRGenerator />;
 
     // Text Tools
     case 'word-counter': return <WordCounter />;
@@ -358,6 +444,10 @@ export const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'extract-urls': return <ExtractURLs />;
     case 'text-to-morse': return <TextToMorse />;
     case 'morse-to-text': return <MorseToText />;
+    case 'text-replacement': return <TextReplacement />;
+    case 'text-repeater': return <TextRepeater />;
+    case 'word-frequency': return <WordFrequency />;
+    case 'remove-empty-lines': return <RemoveEmptyLines />;
 
     // Converter Tools
     case 'unit-converter': return <UnitConverter />;
@@ -370,9 +460,42 @@ export const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'qr-generator': return <QRGenerator />;
     case 'qr-scanner': return <QRScanner />;
     case 'bmi-calc': return <BMICalculator />;
+    case 'percentage-calc': return <PercentageCalculator />;
+    case 'random-number': return <RandomNumberGenerator />;
+    case 'random-string': return <RandomStringGenerator />;
     case 'age-calc': return <AgeCalculator />;
     case 'date-calc': return <DateCalculator />;
     case 'url-shortener': return <URLShortener />;
+    
+    // Web Tools
+    case 'html-formatter': return <HTMLFormatter />;
+    case 'html-minifier': return <HTMLMinifier />;
+    case 'css-formatter': return <CSSFormatter />;
+    case 'css-minifier': return <CSSMinifier />;
+    case 'js-formatter': return <JSFormatter />;
+    case 'js-minifier': return <JSMinifier />;
+    case 'url-encoder': return <URLEncoder />;
+    case 'url-decoder': return <URLDecoder />;
+
+    // Dev Tools
+    case 'md5-hash': return <MD5Hash />;
+    case 'sha256-hash': return <SHA256Hash />;
+    case 'base64-encode': return <Base64Encoder />;
+    case 'base64-decode': return <Base64Decoder />;
+    case 'json-to-yaml': return <JSONtoYAML />;
+    case 'yaml-to-json': return <YAMLtoJSON />;
+    case 'uuid-gen': return <UUIDGenerator />;
+    case 'unix-timestamp': return <UnixTimestampConverter />;
+
+    // Social Tools
+    case 'yt-thumbnail': return <YoutubeThumbnailDownloader />;
+    case 'wa-link': return <WhatsappLinkGenerator />;
+    case 'ig-profile': return <InstagramProfileGenerator />;
+
+    // Security Tools
+    case 'password-strength': return <PasswordStrengthMeter />;
+    case 'cc-validator': return <CreditCardValidator />;
+    case 'iban-validator': return <IBANValidator />;
     
     default:
       return (

@@ -97,7 +97,11 @@ export const translations = {
         image: 'Image Tools',
         text: 'Text Tools',
         converter: 'Converter Tools',
-        utility: 'Utility Tools'
+        utility: 'Utility Tools',
+        web: 'Web Tools',
+        dev: 'Developer Tools',
+        social: 'Social Media',
+        security: 'Security Tools'
       },
       useTool: 'Use Tool',
       download: 'Download Result',
@@ -201,11 +205,15 @@ export const translations = {
       subtitle: 'Useful tools for documents, images, text processing, and file conversions.',
       searchPlaceholder: 'Search for a tool...',
       categories: {
-        pdf: 'PDF Tools',
-        image: 'Image Tools',
-        text: 'Text Tools',
-        converter: 'Converter Tools',
-        utility: 'Utility Tools'
+        pdf: 'PDF टूल्स',
+        image: 'इमेज टूल्स',
+        text: 'टेक्स्ट टूल्स',
+        converter: 'कन्वर्टर टूल्स',
+        utility: 'यूटिलिटी टूल्स',
+        web: 'वेब टूल्स',
+        dev: 'डेवलपर टूल्स',
+        social: 'सोशल मीडिया',
+        security: 'सिक्योरिटी टूल्स'
       },
       useTool: 'Use Tool',
       download: 'Download Result',
