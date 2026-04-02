@@ -48,9 +48,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it safe to upload sensitive documents?', answer: 'Yes, we use SSL encryption for all file transfers and our automated system deletes all files shortly after processing.' }
     ],
     relatedTools: [
-      { name: 'Split PDF', link: '/split-pdf-tool.html' },
-      { name: 'Compress PDF', link: '/compress-pdf-tool.html' },
-      { name: 'PDF to Word', link: '/pdf-to-word-tool.html' }
+      { name: 'Split PDF', link: '/tools/split-pdf' },
+      { name: 'Compress PDF', link: '/tools/compress-pdf' },
+      { name: 'PDF to Word', link: '/tools/pdf-to-word' }
     ]
   },
   'split-pdf': {
@@ -88,9 +88,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Can I split multiple PDFs at once?', answer: 'Currently, our tool processes one PDF file at a time for maximum precision.' }
     ],
     relatedTools: [
-      { name: 'Merge PDF', link: '/merge-pdf-tool.html' },
-      { name: 'Compress PDF', link: '/compress-pdf-tool.html' },
-      { name: 'Rotate PDF', link: '/rotate-pdf-tool.html' }
+      { name: 'Merge PDF', link: '/tools/merge-pdf' },
+      { name: 'Compress PDF', link: '/tools/compress-pdf' },
+      { name: 'Rotate PDF', link: '/tools/rotate-pdf' }
     ]
   },
   'compress-pdf': {
@@ -128,9 +128,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work on mobile devices?', answer: 'Yes, our tool is fully responsive and works perfectly on all mobile browsers.' }
     ],
     relatedTools: [
-      { name: 'Merge PDF', link: '/merge-pdf-tool.html' },
-      { name: 'Split PDF', link: '/split-pdf-tool.html' },
-      { name: 'PDF to JPG', link: '/pdf-to-jpg-tool.html' }
+      { name: 'Merge PDF', link: '/tools/merge-pdf' },
+      { name: 'Split PDF', link: '/tools/split-pdf' },
+      { name: 'PDF to JPG', link: '/tools/pdf-to-jpg' }
     ]
   },
   'rotate-pdf': {
@@ -168,9 +168,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work with encrypted PDFs?', answer: 'You will need to provide the password for encrypted PDFs before you can rotate the pages.' }
     ],
     relatedTools: [
-      { name: 'Merge PDF', link: '/merge-pdf-tool.html' },
-      { name: 'Split PDF', link: '/split-pdf-tool.html' },
-      { name: 'Compress PDF', link: '/compress-pdf-tool.html' }
+      { name: 'Merge PDF', link: '/tools/merge-pdf' },
+      { name: 'Split PDF', link: '/tools/split-pdf' },
+      { name: 'Compress PDF', link: '/tools/compress-pdf' }
     ]
   },
   'pdf-to-word': {
@@ -1648,9 +1648,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our BMI Calculator is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Age Calculator', link: '/age-calc-tool.html' },
-      { name: 'Unit Converter', link: '/unit-converter-tool.html' },
-      { name: 'Date Calculator', link: '/date-calc-tool.html' }
+      { name: 'Age Calculator', link: '/tools/age-calc' },
+      { name: 'Unit Converter', link: '/tools/unit-converter' },
+      { name: 'Date Calculator', link: '/tools/date-calc' }
     ]
   }
 };

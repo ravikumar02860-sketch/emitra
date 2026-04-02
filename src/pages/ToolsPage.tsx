@@ -30,7 +30,8 @@ import {
   Binary,
   Activity,
   Volume2,
-  Scan
+  Scan,
+  BookOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
@@ -245,13 +246,21 @@ const ToolsPage = () => {
                 <p className="text-sm text-slate-500 mb-6 flex-grow">
                   {tool.desc}
                 </p>
-                <button
-                  onClick={() => setSelectedTool(tool.id)}
-                  className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 group/btn"
-                >
-                  {t('tools.useTool')}
-                  <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                </button>
+                <div className="flex flex-col gap-2 mt-auto">
+                  <a
+                    href={`/tools/${tool.id}`}
+                    className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 group/btn"
+                  >
+                    {t('tools.useTool')}
+                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                  <a
+                    href={`/guides/${tool.id}`}
+                    className="w-full py-2 px-4 bg-white border border-slate-200 text-slate-600 hover:border-indigo-600 hover:text-indigo-600 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2"
+                  >
+                    <BookOpen size={14} /> {isHi ? 'गाइड देखें' : 'View Guide'}
+                  </a>
+                </div>
               </motion.div>
             );
           })}
@@ -311,7 +320,7 @@ const ToolsPage = () => {
 };
 
 // Tool Renderer Component
-const ToolRenderer = ({ toolId }: { toolId: string }) => {
+export const ToolRenderer = ({ toolId }: { toolId: string }) => {
   switch (toolId) {
     // PDF Tools
     case 'merge-pdf': return <MergePDF />;

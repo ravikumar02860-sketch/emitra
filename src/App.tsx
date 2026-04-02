@@ -30,6 +30,9 @@ const Home = lazy(() => import('./pages/Home'));
 const FormsSection = lazy(() => import('./components/FormsSection'));
 const ToolsPage = lazy(() => import('./pages/ToolsPage'));
 const ToolSEOPage = lazy(() => import('./pages/ToolSEOPage'));
+const ToolPage = lazy(() => import('./pages/ToolPage'));
+const GuidePage = lazy(() => import('./pages/GuidePage'));
+const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 
 const ServiceDetail = ({ id, title, icon: Icon, about, who, docs, steps, notes, website, searchQuery }: any) => {
   const { t } = useLanguage();
@@ -545,6 +548,22 @@ function App() {
     content = <ContactPage />;
   } else if (pathname.endsWith('tools.html')) {
     content = <ToolsPage />;
+  } else if (pathname.startsWith('/tools/')) {
+    const toolId = pathname.split('/').pop();
+    content = <ToolPage toolId={toolId} />;
+  } else if (pathname.startsWith('/guides/')) {
+    const toolId = pathname.split('/').pop();
+    content = <GuidePage toolId={toolId} />;
+  } else if (pathname === '/pdf-tools') {
+    content = <CategoryPage category="pdf" />;
+  } else if (pathname === '/image-tools') {
+    content = <CategoryPage category="image" />;
+  } else if (pathname === '/text-tools') {
+    content = <CategoryPage category="text" />;
+  } else if (pathname === '/converter-tools') {
+    content = <CategoryPage category="converter" />;
+  } else if (pathname === '/utility-tools') {
+    content = <CategoryPage category="utility" />;
   } else if (pathname.includes('-tool.html')) {
     const toolId = pathname.split('/').pop()?.replace('-tool.html', '');
     content = <ToolSEOPage toolId={toolId} />;
