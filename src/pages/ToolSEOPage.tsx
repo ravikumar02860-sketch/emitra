@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
 
 interface ToolSEOPageProps {
   toolId: string | undefined;
@@ -58,7 +58,7 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
               <h2 className="text-3xl font-black text-slate-900">How This Tool Works</h2>
             </div>
             <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed">
-              <ReactMarkdown>{content.howItWorks}</ReactMarkdown>
+              <Markdown>{content.howItWorks}</Markdown>
             </div>
           </section>
 

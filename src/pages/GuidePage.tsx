@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle, Wrench, ListChecks, Info } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 
 interface GuidePageProps {
@@ -99,7 +99,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
               <h2 className="text-3xl font-black text-slate-900">How It Works</h2>
             </div>
             <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed text-lg">
-              <ReactMarkdown>{content.howItWorks}</ReactMarkdown>
+              <Markdown>{content.howItWorks}</Markdown>
             </div>
           </section>
 

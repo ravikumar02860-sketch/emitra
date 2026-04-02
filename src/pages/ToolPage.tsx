@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ToolRenderer } from './ToolsPage';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle, Loader2, BookOpen } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 
 interface ToolPageProps {
