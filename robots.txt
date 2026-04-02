@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://emitraportal.vercel.app/sitemap.xml

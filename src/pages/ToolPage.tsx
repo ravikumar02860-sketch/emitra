@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
-import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle } from 'lucide-react';
+import { ToolRenderer } from './ToolsPage';
+import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle, Loader2, BookOpen } from 'lucide-react';
 import Markdown from 'react-markdown';
+import { Helmet } from 'react-helmet-async';
 
-interface ToolSEOPageProps {
+interface ToolPageProps {
   toolId: string | undefined;
 }
 
-const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
+const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
   const { t } = useLanguage();
   
   if (!toolId || !toolSEOContent[toolId]) {
     return (
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Tool Not Found</h1>
-        <p className="text-slate-600 mb-8">The tool SEO page you are looking for does not exist.</p>
+        <p className="text-slate-600 mb-8">The tool you are looking for does not exist.</p>
         <a href="/tools" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
@@ -23,79 +25,91 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
 
   const content = toolSEOContent[toolId];
 
+  // Schema Markup
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": content.toolName,
+    "operatingSystem": "All",
+    "applicationCategory": "MultimediaApplication",
+    "description": content.metaDescription,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
+      <Helmet>
+        <title>{content.seoTitle}</title>
+        <meta name="description" content={content.metaDescription} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaMarkup)}
+        </script>
+      </Helmet>
+
       {/* Hero Section */}
-      <div className="bg-white border-b border-slate-100 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <div className="bg-white border-b border-slate-100 py-12 md:py-16">
+        <div className="max-w-5xl mx-auto px-6">
           <a href="/tools" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
             <ArrowLeft size={20} /> Back to All Tools
           </a>
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight leading-tight">
-            {content.seoTitle}
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
+            {content.toolName}
           </h1>
-          <p className="text-xl text-slate-600 leading-relaxed mb-8">
+          <p className="text-lg text-slate-600 leading-relaxed max-w-3xl">
             {content.introduction}
           </p>
-          <div className="flex flex-wrap gap-4">
-            <a href={`/tools#${toolId}`} className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
-              Try {content.toolName} Now
-            </a>
-          </div>
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="max-w-4xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 gap-16">
+      {/* Tool Interface Section */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+        <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden mb-16">
+          <div className="p-6 sm:p-10">
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center py-20">
+                <Loader2 className="animate-spin text-indigo-600 mb-4" size={48} />
+                <p className="text-slate-500 font-medium text-lg">Loading tool interface...</p>
+              </div>
+            }>
+              <ToolRenderer toolId={toolId} />
+            </Suspense>
+          </div>
+        </div>
+
+        {/* SEO Content Section */}
+        <div className="grid grid-cols-1 gap-16 max-w-4xl mx-auto">
           
+          {/* Internal Guide Link */}
+          <section className="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-2 bg-white rounded-lg text-indigo-600">
+                <BookOpen size={24} />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900">Need help?</h3>
+                <p className="text-sm text-slate-600">Read our detailed guide on how to use this tool.</p>
+              </div>
+            </div>
+            <a 
+              href={`/guides/${toolId}`} 
+              className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all"
+            >
+              View Guide
+            </a>
+          </section>
+
           {/* How it Works */}
           <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100">
             <div className="flex items-center gap-4 mb-8">
               <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600">
                 <PlayCircle size={28} />
               </div>
-              <h2 className="text-3xl font-black text-slate-900">How This Tool Works</h2>
+              <h2 className="text-3xl font-black text-slate-900">How to Use {content.toolName}</h2>
             </div>
-            <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed">
-              <Markdown>{content.howItWorks}</Markdown>
-            </div>
-          </section>
-
-          {/* Features */}
-          <section>
-            <div className="flex items-center gap-4 mb-10">
-              <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
-                <CheckCircle2 size={28} />
-              </div>
-              <h2 className="text-3xl font-black text-slate-900">Key Features & Benefits</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {content.features.map((feature, index) => (
-                <div key={index} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                  <h3 className="font-bold text-slate-900 mb-2">{feature.title}</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Use Cases */}
-          <section className="bg-indigo-900 text-white p-8 md:p-12 rounded-3xl shadow-xl">
-            <h2 className="text-3xl font-black mb-8">Common Use Cases</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {content.useCases.map((useCase, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="w-8 h-1 bg-indigo-400 rounded-full" />
-                  <p className="text-indigo-100 leading-relaxed">{useCase}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* How to Use */}
-          <section className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100">
-            <h2 className="text-3xl font-black text-slate-900 mb-8">Step-by-Step Guide to Use {content.toolName}</h2>
             <div className="space-y-6">
               {content.howToUseSteps.map((step, index) => (
                 <div key={index} className="flex gap-6">
@@ -108,13 +122,31 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
             </div>
           </section>
 
+          {/* Features */}
+          <section>
+            <div className="flex items-center gap-4 mb-10">
+              <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
+                <CheckCircle2 size={28} />
+              </div>
+              <h2 className="text-3xl font-black text-slate-900">Features & Benefits</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {content.features.map((feature, index) => (
+                <div key={index} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                  <h3 className="font-bold text-slate-900 mb-2">{feature.title}</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Security */}
           <section className="flex flex-col md:flex-row items-center gap-10 bg-emerald-50 p-8 md:p-12 rounded-3xl border border-emerald-100">
             <div className="p-6 bg-white rounded-2xl text-emerald-600 shadow-sm">
               <ShieldCheck size={48} />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-900 mb-4">Security & Privacy Guaranteed</h2>
+              <h2 className="text-2xl font-black text-slate-900 mb-4">100% Secure & Private</h2>
               <p className="text-slate-600 leading-relaxed">
                 {content.securityPrivacy}
               </p>
@@ -160,18 +192,10 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
             </div>
           </section>
 
-          {/* CTA */}
-          <section className="text-center py-10">
-            <h2 className="text-3xl font-black text-slate-900 mb-6">Ready to get started?</h2>
-            <a href={`/tools#${toolId}`} className="inline-block bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl">
-              Use {content.toolName} for Free
-            </a>
-          </section>
-
         </div>
       </div>
     </div>
   );
 };
 
-export default ToolSEOPage;
+export default ToolPage;
