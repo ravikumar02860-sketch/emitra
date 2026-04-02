@@ -208,9 +208,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work on Mac and Windows?', answer: 'Yes, our tool is web-based and works perfectly on all operating systems and browsers.' }
     ],
     relatedTools: [
-      { name: 'Word to PDF', link: '/word-to-pdf-tool.html' },
-      { name: 'PDF to Text', link: '/pdf-to-text-tool.html' },
-      { name: 'PDF to JPG', link: '/pdf-to-jpg-tool.html' }
+      { name: 'Word to PDF', link: '/tools/word-to-pdf' },
+      { name: 'PDF to Text', link: '/tools/pdf-to-text' },
+      { name: 'PDF to JPG', link: '/tools/pdf-to-jpg' }
     ]
   },
   'word-to-pdf': {
@@ -248,9 +248,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it support images and tables?', answer: 'Yes, our converter accurately preserves all images, tables, and complex formatting within your Word document.' }
     ],
     relatedTools: [
-      { name: 'PDF to Word', link: '/pdf-to-word-tool.html' },
-      { name: 'Merge PDF', link: '/merge-pdf-tool.html' },
-      { name: 'Compress PDF', link: '/compress-pdf-tool.html' }
+      { name: 'PDF to Word', link: '/tools/pdf-to-word' },
+      { name: 'Merge PDF', link: '/tools/merge-pdf' },
+      { name: 'Compress PDF', link: '/tools/compress-pdf' }
     ]
   },
   'pdf-to-text': {
@@ -288,9 +288,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is there a limit to the file size I can upload?', answer: 'We support PDF files up to 50MB for free text extraction.' }
     ],
     relatedTools: [
-      { name: 'PDF to Word', link: '/pdf-to-word-tool.html' },
-      { name: 'PDF to JPG', link: '/pdf-to-jpg-tool.html' },
-      { name: 'Word Counter', link: '/word-counter-tool.html' }
+      { name: 'PDF to Word', link: '/tools/pdf-to-word' },
+      { name: 'PDF to JPG', link: '/tools/pdf-to-jpg' },
+      { name: 'Word Counter', link: '/tools/word-counter' }
     ]
   },
   'pdf-to-jpg': {
@@ -328,9 +328,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work with large PDF files?', answer: 'Yes, we support PDF files up to 100MB for free conversion to JPG.' }
     ],
     relatedTools: [
-      { name: 'JPG to PDF', link: '/jpg-to-pdf-tool.html' },
-      { name: 'PDF to Word', link: '/pdf-to-word-tool.html' },
-      { name: 'Image Compressor', link: '/image-compressor-tool.html' }
+      { name: 'JPG to PDF', link: '/tools/jpg-to-pdf' },
+      { name: 'PDF to Word', link: '/tools/pdf-to-word' },
+      { name: 'Image Compressor', link: '/tools/image-compressor' }
     ]
   },
   'jpg-to-pdf': {
@@ -368,9 +368,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work on mobile devices?', answer: 'Yes, our tool is fully responsive and works perfectly on all mobile browsers.' }
     ],
     relatedTools: [
-      { name: 'PDF to JPG', link: '/pdf-to-jpg-tool.html' },
-      { name: 'Merge PDF', link: '/merge-pdf-tool.html' },
-      { name: 'Image Compressor', link: '/image-compressor-tool.html' }
+      { name: 'PDF to JPG', link: '/tools/pdf-to-jpg' },
+      { name: 'Merge PDF', link: '/tools/merge-pdf' },
+      { name: 'Image Compressor', link: '/tools/image-compressor' }
     ]
   },
   'image-compressor': {
@@ -408,9 +408,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Can I compress images on my phone?', answer: 'Absolutely! Our tool is fully responsive and works perfectly on all mobile browsers.' }
     ],
     relatedTools: [
-      { name: 'Image Resizer', link: '/image-resizer-tool.html' },
-      { name: 'Image Converter', link: '/image-converter-tool.html' },
-      { name: 'Image to Text (OCR)', link: '/image-to-text-tool.html' }
+      { name: 'Image Resizer', link: '/tools/image-resizer' },
+      { name: 'Image Converter', link: '/tools/image-converter' },
+      { name: 'Image to Text (OCR)', link: '/tools/image-to-text' }
     ]
   },
   'image-resizer': {
@@ -448,9 +448,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is there a limit to the image size I can upload?', answer: 'We support images up to 25MB, which is sufficient for most high-resolution photography.' }
     ],
     relatedTools: [
-      { name: 'Image Compressor', link: '/image-compressor-tool.html' },
-      { name: 'Image Cropper', link: '/image-cropper-tool.html' },
-      { name: 'Image Converter', link: '/image-converter-tool.html' }
+      { name: 'Image Compressor', link: '/tools/image-compressor' },
+      { name: 'Image Cropper', link: '/tools/image-cropper' },
+      { name: 'Image Converter', link: '/tools/image-converter' }
     ]
   },
   'image-converter': {
@@ -488,9 +488,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it support RAW camera files?', answer: 'Currently, we support common web and document image formats. Support for professional RAW files is planned for future updates.' }
     ],
     relatedTools: [
-      { name: 'Image Compressor', link: '/image-compressor-tool.html' },
-      { name: 'Image Resizer', link: '/image-resizer-tool.html' },
-      { name: 'Image to Base64', link: '/image-to-base64-tool.html' }
+      { name: 'Image Compressor', link: '/tools/image-compressor' },
+      { name: 'Image Resizer', link: '/tools/image-resizer' },
+      { name: 'Image to Base64', link: '/tools/image-to-base64' }
     ]
   },
   'image-filters': {
@@ -528,9 +528,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work with PNG transparency?', answer: 'Yes, our filtering process respects the alpha channel and maintains transparency in your images.' }
     ],
     relatedTools: [
-      { name: 'Image Cropper', link: '/image-cropper-tool.html' },
-      { name: 'Image Resizer', link: '/image-resizer-tool.html' },
-      { name: 'Image Compressor', link: '/image-compressor-tool.html' }
+      { name: 'Image Cropper', link: '/tools/image-cropper' },
+      { name: 'Image Resizer', link: '/tools/image-resizer' },
+      { name: 'Image Compressor', link: '/tools/image-compressor' }
     ]
   },
   'image-cropper': {
@@ -568,9 +568,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it support large image files?', answer: 'Yes, our tool can handle high-resolution images up to 30MB without any issues.' }
     ],
     relatedTools: [
-      { name: 'Image Resizer', link: '/image-resizer-tool.html' },
-      { name: 'Image Filters', link: '/image-filters-tool.html' },
-      { name: 'Image Compressor', link: '/image-compressor-tool.html' }
+      { name: 'Image Resizer', link: '/tools/image-resizer' },
+      { name: 'Image Filters', link: '/tools/image-filters' },
+      { name: 'Image Compressor', link: '/tools/image-compressor' }
     ]
   },
   'image-to-text': {
@@ -608,9 +608,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is there a limit to the amount of text it can extract?', answer: 'No, the tool can extract all the text it finds within your uploaded image, regardless of length.' }
     ],
     relatedTools: [
-      { name: 'PDF to Text', link: '/pdf-to-text-tool.html' },
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'Case Converter', link: '/case-converter-tool.html' }
+      { name: 'PDF to Text', link: '/tools/pdf-to-text' },
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'Case Converter', link: '/tools/case-converter' }
     ]
   },
   'image-to-base64': {
@@ -648,9 +648,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Can I use the string in CSS?', answer: 'Yes, you can use it in the `url()` function for properties like `background-image`.' }
     ],
     relatedTools: [
-      { name: 'Base64 to Image', link: '/base64-to-image-tool.html' },
-      { name: 'Image Converter', link: '/image-converter-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' }
+      { name: 'Base64 to Image', link: '/tools/base64-to-image' },
+      { name: 'Image Converter', link: '/tools/image-converter' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' }
     ]
   },
   'base64-to-image': {
@@ -688,9 +688,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it work with SVG strings?', answer: 'Yes, our tool can decode and render Base64-encoded SVG data as well.' }
     ],
     relatedTools: [
-      { name: 'Image to Base64', link: '/image-to-base64-tool.html' },
-      { name: 'Image Converter', link: '/image-converter-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' }
+      { name: 'Image to Base64', link: '/tools/image-to-base64' },
+      { name: 'Image Converter', link: '/tools/image-converter' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' }
     ]
   },
   'word-counter': {
@@ -728,9 +728,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Can I use this on my tablet?', answer: 'Yes, the tool is fully optimized for mobile and tablet devices.' }
     ],
     relatedTools: [
-      { name: 'Case Converter', link: '/case-converter-tool.html' },
-      { name: 'Lorem Ipsum Generator', link: '/lorem-ipsum-generator-tool.html' },
-      { name: 'Text to Speech', link: '/text-to-speech-tool.html' }
+      { name: 'Case Converter', link: '/tools/case-converter' },
+      { name: 'Lorem Ipsum Generator', link: '/tools/lorem-ipsum-generator' },
+      { name: 'Text to Speech', link: '/tools/text-to-speech' }
     ]
   },
   'case-converter': {
@@ -768,9 +768,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Case Converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'Lorem Ipsum Generator', link: '/lorem-ipsum-generator-tool.html' },
-      { name: 'Remove Duplicate Lines', link: '/remove-duplicate-lines-tool.html' }
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'Lorem Ipsum Generator', link: '/tools/lorem-ipsum-generator' },
+      { name: 'Remove Duplicate Lines', link: '/tools/remove-duplicate-lines' }
     ]
   },
   'lorem-ipsum-generator': {
@@ -808,9 +808,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it generate HTML tags?', answer: 'Currently, it generates plain text. You can easily wrap the output in your own HTML tags as needed.' }
     ],
     relatedTools: [
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'Case Converter', link: '/case-converter-tool.html' },
-      { name: 'Text to Speech', link: '/text-to-speech-tool.html' }
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'Case Converter', link: '/tools/case-converter' },
+      { name: 'Text to Speech', link: '/tools/text-to-speech' }
     ]
   },
   'text-to-speech': {
@@ -848,9 +848,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is there a limit to how much text I can play?', answer: 'While there is no strict limit, extremely long texts might be broken into smaller segments by the browser for smoother playback.' }
     ],
     relatedTools: [
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'Case Converter', link: '/case-converter-tool.html' },
-      { name: 'Lorem Ipsum Generator', link: '/lorem-ipsum-generator-tool.html' }
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'Case Converter', link: '/tools/case-converter' },
+      { name: 'Lorem Ipsum Generator', link: '/tools/lorem-ipsum-generator' }
     ]
   },
   'remove-duplicate-lines': {
@@ -888,9 +888,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Yes, our Remove Duplicate Lines tool is 100% free with no usage limits.' }
     ],
     relatedTools: [
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'Case Converter', link: '/case-converter-tool.html' },
-      { name: 'Reverse Text', link: '/reverse-text-tool.html' }
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'Case Converter', link: '/tools/case-converter' },
+      { name: 'Reverse Text', link: '/tools/reverse-text' }
     ]
   },
   'reverse-text': {
@@ -928,9 +928,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Can I reverse text in different languages?', answer: 'Absolutely! Our tool works with all standard text-based languages.' }
     ],
     relatedTools: [
-      { name: 'Case Converter', link: '/case-converter-tool.html' },
-      { name: 'Remove Duplicate Lines', link: '/remove-duplicate-lines-tool.html' },
-      { name: 'Text to Morse', link: '/text-to-morse-tool.html' }
+      { name: 'Case Converter', link: '/tools/case-converter' },
+      { name: 'Remove Duplicate Lines', link: '/tools/remove-duplicate-lines' },
+      { name: 'Text to Morse', link: '/tools/text-to-morse' }
     ]
   },
   'binary-converter': {
@@ -968,9 +968,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Binary Converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' },
-      { name: 'Text to Morse', link: '/text-to-morse-tool.html' },
-      { name: 'SQL Formatter', link: '/sql-formatter-tool.html' }
+      { name: 'JSON Formatter', link: '/tools/json-formatter' },
+      { name: 'Text to Morse', link: '/tools/text-to-morse' },
+      { name: 'SQL Formatter', link: '/tools/sql-formatter' }
     ]
   },
   'json-formatter': {
@@ -1008,9 +1008,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Does it support other formats like XML?', answer: 'This specific tool is for JSON. We have a separate XML to JSON converter for other data types.' }
     ],
     relatedTools: [
-      { name: 'SQL Formatter', link: '/sql-formatter-tool.html' },
-      { name: 'Binary Converter', link: '/binary-converter-tool.html' },
-      { name: 'JSON to CSV', link: '/json-to-csv-tool.html' }
+      { name: 'SQL Formatter', link: '/tools/sql-formatter' },
+      { name: 'Binary Converter', link: '/tools/binary-converter' },
+      { name: 'JSON to CSV', link: '/tools/json-to-csv' }
     ]
   },
   'sql-formatter': {
@@ -1048,9 +1048,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our SQL Formatter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' },
-      { name: 'Binary Converter', link: '/binary-converter-tool.html' },
-      { name: 'Extract Emails', link: '/extract-emails-tool.html' }
+      { name: 'JSON Formatter', link: '/tools/json-formatter' },
+      { name: 'Binary Converter', link: '/tools/binary-converter' },
+      { name: 'Extract Emails', link: '/tools/extract-emails' }
     ]
   },
   'extract-emails': {
@@ -1088,9 +1088,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Email Extractor is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Extract URLs', link: '/extract-urls-tool.html' },
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'Remove Duplicate Lines', link: '/remove-duplicate-lines-tool.html' }
+      { name: 'Extract URLs', link: '/tools/extract-urls' },
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'Remove Duplicate Lines', link: '/tools/remove-duplicate-lines' }
     ]
   },
   'extract-urls': {
@@ -1128,9 +1128,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our URL Extractor is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Extract Emails', link: '/extract-emails-tool.html' },
-      { name: 'Word Counter', link: '/word-counter-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' }
+      { name: 'Extract Emails', link: '/tools/extract-emails' },
+      { name: 'Word Counter', link: '/tools/word-counter' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' }
     ]
   },
   'text-to-morse': {
@@ -1168,9 +1168,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Text to Morse converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Morse to Text', link: '/morse-to-text-tool.html' },
-      { name: 'Binary Converter', link: '/binary-converter-tool.html' },
-      { name: 'Reverse Text', link: '/reverse-text-tool.html' }
+      { name: 'Morse to Text', link: '/tools/morse-to-text' },
+      { name: 'Binary Converter', link: '/tools/binary-converter' },
+      { name: 'Reverse Text', link: '/tools/reverse-text' }
     ]
   },
   'morse-to-text': {
@@ -1208,9 +1208,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Morse to Text converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Text to Morse', link: '/text-to-morse-tool.html' },
-      { name: 'Binary Converter', link: '/binary-converter-tool.html' },
-      { name: 'Reverse Text', link: '/reverse-text-tool.html' }
+      { name: 'Text to Morse', link: '/tools/text-to-morse' },
+      { name: 'Binary Converter', link: '/tools/binary-converter' },
+      { name: 'Reverse Text', link: '/tools/reverse-text' }
     ]
   },
   'unit-converter': {
@@ -1248,9 +1248,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is there a limit to how many conversions I can do?', answer: 'No, our tool is 100% free with no limits on the number of conversions you can perform.' }
     ],
     relatedTools: [
-      { name: 'Binary Converter', link: '/binary-converter-tool.html' },
-      { name: 'Age Calculator', link: '/age-calc-tool.html' },
-      { name: 'BMI Calculator', link: '/bmi-calc-tool.html' }
+      { name: 'Binary Converter', link: '/tools/binary-converter' },
+      { name: 'Age Calculator', link: '/tools/age-calc' },
+      { name: 'BMI Calculator', link: '/tools/bmi-calc' }
     ]
   },
   'json-to-csv': {
@@ -1288,9 +1288,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our JSON to CSV converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'CSV to JSON', link: '/csv-to-json-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' },
-      { name: 'XML to JSON', link: '/xml-to-json-tool.html' }
+      { name: 'CSV to JSON', link: '/tools/csv-to-json' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' },
+      { name: 'XML to JSON', link: '/tools/xml-to-json' }
     ]
   },
   'csv-to-json': {
@@ -1328,9 +1328,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our CSV to JSON converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'JSON to CSV', link: '/json-to-csv-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' },
-      { name: 'XML to JSON', link: '/xml-to-json-tool.html' }
+      { name: 'JSON to CSV', link: '/tools/json-to-csv' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' },
+      { name: 'XML to JSON', link: '/tools/xml-to-json' }
     ]
   },
   'xml-to-json': {
@@ -1368,9 +1368,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our XML to JSON converter is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'JSON to CSV', link: '/json-to-csv-tool.html' },
-      { name: 'CSV to JSON', link: '/csv-to-json-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' }
+      { name: 'JSON to CSV', link: '/tools/json-to-csv' },
+      { name: 'CSV to JSON', link: '/tools/csv-to-json' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' }
     ]
   },
   'password-gen': {
@@ -1408,9 +1408,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Password Generator is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'QR Code Generator', link: '/qr-generator-tool.html' },
-      { name: 'Binary Converter', link: '/binary-converter-tool.html' },
-      { name: 'JSON Formatter', link: '/json-formatter-tool.html' }
+      { name: 'QR Code Generator', link: '/tools/qr-generator' },
+      { name: 'Binary Converter', link: '/tools/binary-converter' },
+      { name: 'JSON Formatter', link: '/tools/json-formatter' }
     ]
   },
   'qr-generator': {
@@ -1448,9 +1448,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our QR Code Generator is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'QR Code Scanner', link: '/qr-scanner-tool.html' },
-      { name: 'URL Shortener', link: '/url-shortener-tool.html' },
-      { name: 'Password Generator', link: '/password-gen-tool.html' }
+      { name: 'QR Code Scanner', link: '/tools/qr-scanner' },
+      { name: 'URL Shortener', link: '/tools/url-shortener' },
+      { name: 'Password Generator', link: '/tools/password-gen' }
     ]
   },
   'qr-scanner': {
@@ -1488,9 +1488,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our QR Code Scanner is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'QR Code Generator', link: '/qr-generator-tool.html' },
-      { name: 'URL Shortener', link: '/url-shortener-tool.html' },
-      { name: 'Image to Text', link: '/image-to-text-tool.html' }
+      { name: 'QR Code Generator', link: '/tools/qr-generator' },
+      { name: 'URL Shortener', link: '/tools/url-shortener' },
+      { name: 'Image to Text', link: '/tools/image-to-text' }
     ]
   },
   'age-calc': {
@@ -1528,9 +1528,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Age Calculator is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Date Calculator', link: '/date-calc-tool.html' },
-      { name: 'BMI Calculator', link: '/bmi-calc-tool.html' },
-      { name: 'Unit Converter', link: '/unit-converter-tool.html' }
+      { name: 'Date Calculator', link: '/tools/date-calc' },
+      { name: 'BMI Calculator', link: '/tools/bmi-calc' },
+      { name: 'Unit Converter', link: '/tools/unit-converter' }
     ]
   },
   'date-calc': {
@@ -1568,9 +1568,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Is it free to use?', answer: 'Absolutely! Our Date Calculator is 100% free with no limits on usage.' }
     ],
     relatedTools: [
-      { name: 'Age Calculator', link: '/age-calc-tool.html' },
-      { name: 'Unit Converter', link: '/unit-converter-tool.html' },
-      { name: 'BMI Calculator', link: '/bmi-calc-tool.html' }
+      { name: 'Age Calculator', link: '/tools/age-calc' },
+      { name: 'Unit Converter', link: '/tools/unit-converter' },
+      { name: 'BMI Calculator', link: '/tools/bmi-calc' }
     ]
   },
   'url-shortener': {
@@ -1608,9 +1608,9 @@ export const toolSEOContent: Record<string, ToolSEOData> = {
       { question: 'Are the links safe to click?', answer: 'We actively filter for known malicious URLs to help keep our users safe, but you should always be cautious when clicking links from unknown sources.' }
     ],
     relatedTools: [
-      { name: 'QR Code Generator', link: '/qr-generator-tool.html' },
-      { name: 'QR Code Scanner', link: '/qr-scanner-tool.html' },
-      { name: 'Extract URLs', link: '/extract-urls-tool.html' }
+      { name: 'QR Code Generator', link: '/tools/qr-generator' },
+      { name: 'QR Code Scanner', link: '/tools/qr-scanner' },
+      { name: 'Extract URLs', link: '/tools/extract-urls' }
     ]
   },
   'bmi-calc': {
