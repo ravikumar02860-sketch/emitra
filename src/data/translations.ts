@@ -91,18 +91,13 @@ export const translations = {
     tools: {
       title: 'Free Online Tools',
       subtitle: 'Useful tools for documents, images, text processing, and file conversions.',
-      searchPlaceholder: 'Search 300+ Free Online Tools in Bhilwara | AI, PDF, Converter...',
-      seoText: 'e-Mitra Portal Bhilwara offers a comprehensive suite of over 300+ free online tools designed to simplify your digital tasks. Whether you are looking for AI-powered content generators, PDF editors, image converters, or developer utilities, our platform provides professional-grade tools right at your fingertips. Serving the community of Bhilwara and across Rajasthan, we ensure that every tool is fast, secure, and mobile-responsive. From converting documents to optimizing images for SEO, e-Mitra Portal is your one-stop destination for digital productivity in Rajasthan.',
+      searchPlaceholder: 'Search for a tool...',
       categories: {
         pdf: 'PDF Tools',
         image: 'Image Tools',
         text: 'Text Tools',
         converter: 'Converter Tools',
-        utility: 'Utility Tools',
-        web: 'Web Tools',
-        dev: 'Developer Tools',
-        social: 'Social Media',
-        security: 'Security Tools'
+        utility: 'Utility Tools'
       },
       useTool: 'Use Tool',
       download: 'Download Result',
@@ -204,18 +199,13 @@ export const translations = {
     tools: {
       title: 'Free Online Tools',
       subtitle: 'Useful tools for documents, images, text processing, and file conversions.',
-      searchPlaceholder: 'Search 300+ Free Online Tools in Bhilwara | AI, PDF, Converter...',
-      seoText: 'e-Mitra पोर्टल भीलवाड़ा आपके डिजिटल कार्यों को सरल बनाने के लिए डिज़ाइन किए गए 300+ से अधिक मुफ्त ऑनलाइन टूल का एक व्यापक सूट प्रदान करता है। चाहे आप AI-संचालित सामग्री जनरेटर, PDF संपादक, इमेज कन्वर्टर, या डेवलपर उपयोगिताओं की तलाश कर रहे हों, हमारा प्लेटफ़ॉर्म आपकी उंगलियों पर पेशेवर-ग्रेड टूल प्रदान करता है। भीलवाड़ा और पूरे राजस्थान के समुदाय की सेवा करते हुए, हम सुनिश्चित करते हैं कि प्रत्येक टूल तेज़, सुरक्षित और मोबाइल-उत्तरदायी है। दस्तावेज़ों को परिवर्तित करने से लेकर SEO के लिए छवियों को अनुकूलित करने तक, e-Mitra पोर्टल राजस्थान में डिजिटल उत्पादकता के लिए आपका वन-स्टॉप गंतव्य है।',
+      searchPlaceholder: 'Search for a tool...',
       categories: {
-        pdf: 'PDF टूल्स',
-        image: 'इमेज टूल्स',
-        text: 'टेक्स्ट टूल्स',
-        converter: 'कन्वर्टर टूल्स',
-        utility: 'यूटिलिटी टूल्स',
-        web: 'वेब टूल्स',
-        dev: 'डेवलपर टूल्स',
-        social: 'सोशल मीडिया',
-        security: 'सिक्योरिटी टूल्स'
+        pdf: 'PDF Tools',
+        image: 'Image Tools',
+        text: 'Text Tools',
+        converter: 'Converter Tools',
+        utility: 'Utility Tools'
       },
       useTool: 'Use Tool',
       download: 'Download Result',

@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle } from 'lucide-react';
-import Markdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 
 interface ToolSEOPageProps {
   toolId: string | undefined;
@@ -16,7 +16,7 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Tool Not Found</h1>
         <p className="text-slate-600 mb-8">The tool SEO page you are looking for does not exist.</p>
-        <a href="/tools" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
+        <a href="/tools.html" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
   }
@@ -28,7 +28,7 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
       {/* Hero Section */}
       <div className="bg-white border-b border-slate-100 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
-          <a href="/tools" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
+          <a href="/tools.html" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
             <ArrowLeft size={20} /> Back to All Tools
           </a>
           <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight leading-tight">
@@ -38,7 +38,7 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
             {content.introduction}
           </p>
           <div className="flex flex-wrap gap-4">
-            <a href={`/tools#${toolId}`} className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
+            <a href={`/tools.html#${toolId}`} className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
               Try {content.toolName} Now
             </a>
           </div>
@@ -58,7 +58,7 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
               <h2 className="text-3xl font-black text-slate-900">How This Tool Works</h2>
             </div>
             <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed">
-              <Markdown>{content.howItWorks}</Markdown>
+              <ReactMarkdown>{content.howItWorks}</ReactMarkdown>
             </div>
           </section>
 
@@ -163,7 +163,7 @@ const ToolSEOPage: React.FC<ToolSEOPageProps> = ({ toolId }) => {
           {/* CTA */}
           <section className="text-center py-10">
             <h2 className="text-3xl font-black text-slate-900 mb-6">Ready to get started?</h2>
-            <a href={`/tools#${toolId}`} className="inline-block bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl">
+            <a href={`/tools.html#${toolId}`} className="inline-block bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl">
               Use {content.toolName} for Free
             </a>
           </section>

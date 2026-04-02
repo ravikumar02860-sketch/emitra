@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ToolRenderer } from './ToolsPage';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle, Loader2, BookOpen } from 'lucide-react';
-import Markdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 
 interface ToolPageProps {
@@ -18,7 +18,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Tool Not Found</h1>
         <p className="text-slate-600 mb-8">The tool you are looking for does not exist.</p>
-        <a href="/tools" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
+        <a href="/tools.html" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
   }
@@ -53,7 +53,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
       {/* Hero Section */}
       <div className="bg-white border-b border-slate-100 py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-6">
-          <a href="/tools" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
+          <a href="/tools.html" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
             <ArrowLeft size={20} /> Back to All Tools
           </a>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
