@@ -238,7 +238,52 @@ const tools = [
   { id: 'base64-to-image', name: 'Base64 to Image', description: 'Convert Base64 strings back to viewable images.', category: 'utility', icon: ImageIcon },
 ];
 
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("Tool Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-12 text-center bg-red-50 rounded-[40px] border border-red-100">
+          <div className="p-4 bg-white rounded-2xl shadow-sm w-fit mx-auto mb-4">
+            <X size={32} className="text-red-500" />
+          </div>
+          <h3 className="text-xl font-black text-slate-900 mb-2">Something went wrong</h3>
+          <p className="text-slate-600 mb-6">This tool encountered an error and couldn't be loaded.</p>
+          <button 
+            onClick={() => this.setState({ hasError: false })}
+            className="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all"
+          >
+            Try Again
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export const ToolRenderer = ({ toolId }: { toolId: string }) => {
+  return (
+    <ErrorBoundary>
+      <ToolContent toolId={toolId} />
+    </ErrorBoundary>
+  );
+};
+
+const ToolContent = ({ toolId }: { toolId: string }) => {
   switch (toolId) {
     // PDF Tools
     case 'merge-pdf': return <MergePDF />;
