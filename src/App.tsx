@@ -540,14 +540,16 @@ function App() {
   }, [pathname, hash]);
 
   let content;
-  if (pathname.endsWith('services.html')) {
+  if (pathname.endsWith('services.html') || pathname === '/services') {
     content = <ServicesPage />;
-  } else if (pathname.endsWith('forms.html')) {
+  } else if (pathname.endsWith('forms.html') || pathname === '/forms') {
     content = <FormsSection />;
-  } else if (pathname.endsWith('contact.html')) {
+  } else if (pathname.endsWith('contact.html') || pathname === '/contact') {
     content = <ContactPage />;
-  } else if (pathname.endsWith('tools.html')) {
+  } else if (pathname.endsWith('tools.html') || pathname === '/tools') {
     content = <ToolsPage />;
+  } else if (pathname.endsWith('jobs.html') || pathname === '/jobs') {
+    content = <Home />; // Default to Home if jobs page is not explicitly defined yet
   } else if (pathname.startsWith('/tools/')) {
     const toolId = pathname.split('/').pop();
     content = <ToolPage toolId={toolId} />;
@@ -564,8 +566,8 @@ function App() {
     content = <CategoryPage category="converter" />;
   } else if (pathname === '/utility-tools') {
     content = <CategoryPage category="utility" />;
-  } else if (pathname.includes('-tool.html')) {
-    const toolId = pathname.split('/').pop()?.replace('-tool.html', '');
+  } else if (pathname.includes('-tool.html') || (pathname.endsWith('-tool') && !pathname.includes('/'))) {
+    const toolId = pathname.split('/').pop()?.replace('-tool.html', '').replace('-tool', '');
     content = <ToolSEOPage toolId={toolId} />;
   } else {
     content = <Home />;

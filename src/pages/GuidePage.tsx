@@ -17,7 +17,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Guide Not Found</h1>
         <p className="text-slate-600 mb-8">The guide you are looking for does not exist.</p>
-        <a href="/tools.html" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
+        <a href="/tools" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
   }
@@ -34,7 +34,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
       {/* Hero Section */}
       <div className="bg-white border-b border-slate-100 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
-          <a href="/tools.html" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
+          <a href="/tools" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
             <ArrowLeft size={20} /> Back to All Tools
           </a>
           <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight leading-tight">

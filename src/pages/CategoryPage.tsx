@@ -67,7 +67,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
       {/* Hero Section */}
       <div className="bg-white border-b border-slate-100 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <a href="/tools.html" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
+          <a href="/tools" className="inline-flex items-center gap-2 text-indigo-600 font-bold mb-8 hover:gap-3 transition-all">
             <ArrowLeft size={20} /> Back to All Tools
           </a>
           <div className="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8">

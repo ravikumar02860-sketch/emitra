@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         {/* Brand */}
         <div className="space-y-6">
-          <a href="index.html" className="flex items-center gap-2 group">
+          <a href="/" className="flex items-center gap-2 group">
             <div className="p-2 bg-indigo-600 rounded-lg text-white group-hover:rotate-12 transition-transform">
               <Globe size={24} />
             </div>
@@ -36,11 +36,11 @@ const Footer: React.FC = () => {
         <div>
           <h4 className="text-lg font-bold mb-6">{t('footer.quickLinks')}</h4>
           <ul className="space-y-4 text-sm text-slate-400">
-            <li><a href="index.html" className="hover:text-white transition-colors">{t('nav.home')}</a></li>
-            <li><a href="services.html" className="hover:text-white transition-colors">{t('nav.services')}</a></li>
-            <li><a href="forms.html" className="hover:text-white transition-colors">{t('nav.forms')}</a></li>
-            <li><a href="jobs.html" className="hover:text-white transition-colors">{t('nav.jobs')}</a></li>
-            <li><a href="contact.html" className="hover:text-white transition-colors">{t('nav.contact')}</a></li>
+            <li><a href="/" className="hover:text-white transition-colors">{t('nav.home')}</a></li>
+            <li><a href="services" className="hover:text-white transition-colors">{t('nav.services')}</a></li>
+            <li><a href="forms" className="hover:text-white transition-colors">{t('nav.forms')}</a></li>
+            <li><a href="jobs" className="hover:text-white transition-colors">{t('nav.jobs')}</a></li>
+            <li><a href="contact" className="hover:text-white transition-colors">{t('nav.contact')}</a></li>
           </ul>
         </div>
 
@@ -48,10 +48,10 @@ const Footer: React.FC = () => {
         <div>
           <h4 className="text-lg font-bold mb-6">{t('nav.services')}</h4>
           <ul className="space-y-4 text-sm text-slate-400">
-            <li><a href="services.html#aadhaar" className="hover:text-white transition-colors">Aadhaar Update</a></li>
-            <li><a href="services.html#pan" className="hover:text-white transition-colors">PAN Card Apply</a></li>
-            <li><a href="services.html#certificates" className="hover:text-white transition-colors">Income Certificate</a></li>
-            <li><a href="services.html#exams" className="hover:text-white transition-colors">Exam Form Filling</a></li>
+            <li><a href="services#aadhaar" className="hover:text-white transition-colors">Aadhaar Update</a></li>
+            <li><a href="services#pan" className="hover:text-white transition-colors">PAN Card Apply</a></li>
+            <li><a href="services#certificates" className="hover:text-white transition-colors">Income Certificate</a></li>
+            <li><a href="services#exams" className="hover:text-white transition-colors">Exam Form Filling</a></li>
           </ul>
         </div>
 

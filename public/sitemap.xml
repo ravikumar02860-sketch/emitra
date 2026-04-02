@@ -7,23 +7,23 @@
 </url>
 
 <url>
-  <loc>https://emitraportal.vercel.app/services.html</loc>
+  <loc>https://emitraportal.vercel.app/services</loc>
 </url>
 
 <url>
-  <loc>https://emitraportal.vercel.app/forms.html</loc>
+  <loc>https://emitraportal.vercel.app/forms</loc>
 </url>
 
 <url>
-  <loc>https://emitraportal.vercel.app/tools.html</loc>
+  <loc>https://emitraportal.vercel.app/tools</loc>
 </url>
 
 <url>
-  <loc>https://emitraportal.vercel.app/contact.html</loc>
+  <loc>https://emitraportal.vercel.app/contact</loc>
 </url>
 
 <url>
-  <loc>https://emitraportal.vercel.app/jobs.html</loc>
+  <loc>https://emitraportal.vercel.app/jobs</loc>
 </url>
 
 <!-- Tool Pages -->
@@ -113,46 +113,46 @@
 <url><loc>https://emitraportal.vercel.app/guides/bmi-calc</loc></url>
 
 <!-- Tool SEO Pages -->
-<url><loc>https://emitraportal.vercel.app/merge-pdf-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/split-pdf-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/compress-pdf-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/rotate-pdf-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/pdf-to-word-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/word-to-pdf-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/pdf-to-text-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/pdf-to-jpg-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/jpg-to-pdf-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-compressor-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-resizer-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-converter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-filters-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-cropper-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-to-text-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/image-to-base64-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/base64-to-image-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/word-counter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/case-converter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/lorem-ipsum-generator-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/text-to-speech-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/remove-duplicate-lines-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/reverse-text-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/binary-converter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/json-formatter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/sql-formatter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/extract-emails-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/extract-urls-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/text-to-morse-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/morse-to-text-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/unit-converter-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/json-to-csv-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/csv-to-json-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/xml-to-json-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/password-gen-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/qr-generator-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/qr-scanner-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/age-calc-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/date-calc-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/url-shortener-tool.html</loc></url>
-<url><loc>https://emitraportal.vercel.app/bmi-calc-tool.html</loc></url>
+<url><loc>https://emitraportal.vercel.app/merge-pdf-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/split-pdf-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/compress-pdf-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/rotate-pdf-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/pdf-to-word-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/word-to-pdf-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/pdf-to-text-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/pdf-to-jpg-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/jpg-to-pdf-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-compressor-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-resizer-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-converter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-filters-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-cropper-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-to-text-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/image-to-base64-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/base64-to-image-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/word-counter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/case-converter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/lorem-ipsum-generator-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/text-to-speech-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/remove-duplicate-lines-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/reverse-text-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/binary-converter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/json-formatter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/sql-formatter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/extract-emails-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/extract-urls-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/text-to-morse-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/morse-to-text-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/unit-converter-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/json-to-csv-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/csv-to-json-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/xml-to-json-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/password-gen-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/qr-generator-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/qr-scanner-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/age-calc-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/date-calc-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/url-shortener-tool</loc></url>
+<url><loc>https://emitraportal.vercel.app/bmi-calc-tool</loc></url>
 
 </urlset>

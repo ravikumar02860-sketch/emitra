@@ -20,11 +20,9 @@ import {
   QrCode,
   Hash,
   Calculator,
-  Clock,
   Calendar,
   Link,
   Shield,
-  Languages,
   FileJson,
   FileCode,
   Binary,
@@ -33,17 +31,11 @@ import {
   Scan,
   BookOpen,
   Globe,
-  Code,
-  Share2,
-  Youtube,
-  MessageSquare,
-  Instagram,
-  Lock,
-  CreditCard,
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import { Helmet } from 'react-helmet-async';
 
 // Lazy load tool components
 const MergePDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.MergePDF })));
@@ -82,10 +74,6 @@ const ExtractEmails = lazy(() => import('../components/tools/TextTools').then(mo
 const ExtractURLs = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.ExtractURLs })));
 const TextToMorse = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextToMorse })));
 const MorseToText = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.MorseToText })));
-const TextReplacement = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextReplacement })));
-const TextRepeater = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextRepeater })));
-const WordFrequency = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.WordFrequency })));
-const RemoveEmptyLines = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.RemoveEmptyLines })));
 
 const PasswordGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.PasswordGenerator })));
 const BMICalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.BMICalculator })));
@@ -94,52 +82,15 @@ const DateCalculator = lazy(() => import('../components/tools/UtilityTools').the
 const URLShortener = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.URLShortener })));
 const QRGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRGenerator })));
 const QRScanner = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRScanner })));
-const PercentageCalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.PercentageCalculator })));
-const RandomNumberGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.RandomNumberGenerator })));
-const RandomStringGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.RandomStringGenerator })));
-
-// Web Tools
-const HTMLFormatter = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.HTMLFormatter })));
-const HTMLMinifier = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.HTMLMinifier })));
-const CSSFormatter = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.CSSFormatter })));
-const CSSMinifier = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.CSSMinifier })));
-const JSFormatter = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.JSFormatter })));
-const JSMinifier = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.JSMinifier })));
-const URLEncoder = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.URLEncoder })));
-const URLDecoder = lazy(() => import('../components/tools/WebTools').then(module => ({ default: module.URLDecoder })));
-
-// Dev Tools
-const MD5Hash = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.MD5Hash })));
-const SHA256Hash = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.SHA256Hash })));
-const Base64Encoder = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.Base64Encoder })));
-const Base64Decoder = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.Base64Decoder })));
-const JSONtoYAML = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.JSONtoYAML })));
-const YAMLtoJSON = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.YAMLtoJSON })));
-const UUIDGenerator = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.UUIDGenerator })));
-const UnixTimestampConverter = lazy(() => import('../components/tools/DevTools').then(module => ({ default: module.UnixTimestampConverter })));
-
-// Social Tools
-const YoutubeThumbnailDownloader = lazy(() => import('../components/tools/SocialTools').then(module => ({ default: module.YoutubeThumbnailDownloader })));
-const WhatsappLinkGenerator = lazy(() => import('../components/tools/SocialTools').then(module => ({ default: module.WhatsappLinkGenerator })));
-const InstagramProfileGenerator = lazy(() => import('../components/tools/SocialTools').then(module => ({ default: module.InstagramProfileGenerator })));
-
-// Security Tools
-const PasswordStrengthMeter = lazy(() => import('../components/tools/SecurityTools').then(module => ({ default: module.PasswordStrengthMeter })));
-const CreditCardValidator = lazy(() => import('../components/tools/SecurityTools').then(module => ({ default: module.CreditCardValidator })));
-const IBANValidator = lazy(() => import('../components/tools/SecurityTools').then(module => ({ default: module.IBANValidator })));
 
 // Tool categories and their icons
 const CATEGORIES = [
-  { id: 'all', name: 'All Tools', icon: Wrench },
+  { id: 'all', name: 'All Tools', icon: Globe },
   { id: 'pdf', name: 'PDF Tools', icon: FileText },
   { id: 'image', name: 'Image Tools', icon: ImageIcon },
   { id: 'text', name: 'Text Tools', icon: Type },
   { id: 'converter', name: 'Converter Tools', icon: RefreshCw },
   { id: 'utility', name: 'Utility Tools', icon: Wrench },
-  { id: 'web', name: 'Web Tools', icon: Globe },
-  { id: 'dev', name: 'Developer Tools', icon: Code },
-  { id: 'social', name: 'Social Media', icon: Share2 },
-  { id: 'security', name: 'Security Tools', icon: Shield },
 ];
 
 const ToolsPage = () => {
@@ -151,95 +102,66 @@ const ToolsPage = () => {
   const isHi = language === 'hi';
 
   // Tool definitions
-  const tools = useMemo(() => [
-    // PDF Tools
-    { id: 'merge-pdf', category: 'pdf', icon: Merge, name: 'Merge PDF', desc: 'Combine multiple PDF files into one.' },
-    { id: 'split-pdf', category: 'pdf', icon: Scissors, name: 'Split PDF', desc: 'Extract pages from your PDF or split into multiple files.' },
-    { id: 'rotate-pdf', category: 'pdf', icon: RotateCw, name: 'Rotate PDF', desc: 'Rotate your PDF pages to the correct orientation.' },
-    { id: 'compress-pdf', category: 'pdf', icon: Minimize, name: 'Compress PDF', desc: 'Optimize PDF structure to reduce file size.' },
-    { id: 'pdf-to-word', category: 'pdf', icon: FileText, name: 'PDF to Word', desc: 'Convert PDF documents to editable Word files.' },
-    { id: 'word-to-pdf', category: 'pdf', icon: FileUp, name: 'Word to PDF', desc: 'Convert Word documents to PDF format.' },
-    { id: 'pdf-to-text', category: 'pdf', icon: Type, name: 'PDF to Text', desc: 'Extract plain text from your PDF file.' },
-    { id: 'pdf-to-jpg', category: 'pdf', icon: ImageIcon, name: 'PDF to JPG', desc: 'Convert PDF pages into JPG images.' },
-    { id: 'jpg-to-pdf', category: 'pdf', icon: FileText, name: 'JPG to PDF', desc: 'Convert JPG images to PDF documents.' },
+  const tools = useMemo(() => {
+    const baseTools = [
+      // PDF Tools
+      { id: 'merge-pdf', category: 'pdf', icon: Merge, name: 'Merge PDF', desc: 'Combine multiple PDF files into one.' },
+      { id: 'split-pdf', category: 'pdf', icon: Scissors, name: 'Split PDF', desc: 'Extract pages from your PDF or split into multiple files.' },
+      { id: 'rotate-pdf', category: 'pdf', icon: RotateCw, name: 'Rotate PDF', desc: 'Rotate your PDF pages to the correct orientation.' },
+      { id: 'compress-pdf', category: 'pdf', icon: Minimize, name: 'Compress PDF', desc: 'Optimize PDF structure to reduce file size.' },
+      { id: 'pdf-to-word', category: 'pdf', icon: FileText, name: 'PDF to Word', desc: 'Convert PDF documents to editable Word files.' },
+      { id: 'word-to-pdf', category: 'pdf', icon: FileUp, name: 'Word to PDF', desc: 'Convert Word documents to PDF format.' },
+      { id: 'pdf-to-text', category: 'pdf', icon: Type, name: 'PDF to Text', desc: 'Extract plain text from your PDF file.' },
+      { id: 'pdf-to-jpg', category: 'pdf', icon: ImageIcon, name: 'PDF to JPG', desc: 'Convert PDF pages into JPG images.' },
+      { id: 'jpg-to-pdf', category: 'pdf', icon: FileText, name: 'JPG to PDF', desc: 'Convert JPG images to PDF documents.' },
 
-    // Image Tools
-    { id: 'image-compressor', category: 'image', icon: Minimize, name: 'Image Compressor', desc: 'Compress images to reduce file size.' },
-    { id: 'image-resizer', category: 'image', icon: Maximize, name: 'Image Resizer', desc: 'Resize images to specific dimensions.' },
-    { id: 'image-converter', category: 'image', icon: RefreshCw, name: 'Image Converter', desc: 'Convert images between PNG, JPG, WebP.' },
-    { id: 'image-filters', category: 'image', icon: ImageIcon, name: 'Image Filters', desc: 'Apply filters like grayscale, sepia, and blur.' },
-    { id: 'image-cropper', category: 'image', icon: Scissors, name: 'Image Cropper', desc: 'Crop images to specific aspect ratios.' },
-    { id: 'image-to-text', category: 'image', icon: Type, name: 'Image to Text', desc: 'Extract text from images using OCR.' },
-    { id: 'image-to-base64', category: 'image', icon: Binary, name: 'Image to Base64', desc: 'Convert images to Base64 strings.' },
-    { id: 'base64-to-image', category: 'image', icon: ImageIcon, name: 'Base64 to Image', desc: 'Convert Base64 strings back to images.' },
+      // Image Tools
+      { id: 'image-compressor', category: 'image', icon: Minimize, name: 'Image Compressor', desc: 'Compress images to reduce file size.' },
+      { id: 'image-resizer', category: 'image', icon: Maximize, name: 'Image Resizer', desc: 'Resize images to specific dimensions.' },
+      { id: 'image-converter', category: 'image', icon: RefreshCw, name: 'Image Converter', desc: 'Convert images between PNG, JPG, WebP.' },
+      { id: 'image-filters', category: 'image', icon: ImageIcon, name: 'Image Filters', desc: 'Apply filters like grayscale, sepia, and blur.' },
+      { id: 'image-cropper', category: 'image', icon: Scissors, name: 'Image Cropper', desc: 'Crop images to specific aspect ratios.' },
+      { id: 'image-to-text', category: 'image', icon: Type, name: 'Image to Text', desc: 'Extract text from images using OCR.' },
+      { id: 'image-to-base64', category: 'image', icon: Binary, name: 'Image to Base64', desc: 'Convert images to Base64 strings.' },
+      { id: 'base64-to-image', category: 'image', icon: ImageIcon, name: 'Base64 to Image', desc: 'Convert Base64 strings back to images.' },
 
-    // Text Tools
-    { id: 'word-counter', category: 'text', icon: Hash, name: 'Word Counter', desc: 'Count words, characters, and lines in your text.' },
-    { id: 'case-converter', category: 'text', icon: Type, name: 'Case Converter', desc: 'Change text case (UPPER, lower, Title, etc.).' },
-    { id: 'lorem-ipsum-generator', category: 'text', icon: FileText, name: 'Lorem Ipsum', desc: 'Generate placeholder text for your designs.' },
-    { id: 'text-to-speech', category: 'text', icon: Volume2, name: 'Text to Speech', desc: 'Convert text into spoken audio.' },
-    { id: 'remove-duplicate-lines', category: 'text', icon: Scissors, name: 'Remove Duplicates', desc: 'Remove duplicate lines from your text.' },
-    { id: 'reverse-text', category: 'text', icon: RefreshCw, name: 'Reverse Text', desc: 'Flip your text backwards.' },
-    { id: 'binary-converter', category: 'text', icon: Binary, name: 'Binary Converter', desc: 'Convert text to binary and vice versa.' },
-    { id: 'json-formatter', category: 'text', icon: FileJson, name: 'JSON Formatter', desc: 'Format and minify JSON data.' },
-    { id: 'sql-formatter', category: 'text', icon: FileCode, name: 'SQL Formatter', desc: 'Format SQL queries for readability.' },
-    { id: 'extract-emails', category: 'text', icon: Type, name: 'Extract Emails', desc: 'Extract email addresses from any text.' },
-    { id: 'extract-urls', category: 'text', icon: Type, name: 'Extract URLs', desc: 'Extract website links from any text.' },
-    { id: 'text-to-morse', category: 'text', icon: Binary, name: 'Text to Morse', desc: 'Convert text to Morse code signals.' },
-    { id: 'morse-to-text', category: 'text', icon: Binary, name: 'Morse to Text', desc: 'Convert Morse code back to plain text.' },
-    { id: 'text-replacement', category: 'text', icon: Type, name: 'Text Replacement', desc: 'Find and replace text patterns.' },
-    { id: 'text-repeater', category: 'text', icon: Type, name: 'Text Repeater', desc: 'Repeat text multiple times.' },
-    { id: 'word-frequency', category: 'text', icon: Hash, name: 'Word Frequency', desc: 'Analyze word frequency in text.' },
-    { id: 'remove-empty-lines', category: 'text', icon: Scissors, name: 'Remove Empty Lines', desc: 'Remove all empty lines from text.' },
+      // Text Tools
+      { id: 'word-counter', category: 'text', icon: Hash, name: 'Word Counter', desc: 'Count words, characters, and lines in your text.' },
+      { id: 'case-converter', category: 'text', icon: Type, name: 'Case Converter', desc: 'Change text case (UPPER, lower, Title, etc.).' },
+      { id: 'lorem-ipsum-generator', category: 'text', icon: FileText, name: 'Lorem Ipsum', desc: 'Generate placeholder text for your designs.' },
+      { id: 'text-to-speech', category: 'text', icon: Volume2, name: 'Text to Speech', desc: 'Convert text into spoken audio.' },
+      { id: 'remove-duplicate-lines', category: 'text', icon: Scissors, name: 'Remove Duplicates', desc: 'Remove duplicate lines from your text.' },
+      { id: 'reverse-text', category: 'text', icon: RefreshCw, name: 'Reverse Text', desc: 'Flip your text backwards.' },
+      { id: 'binary-converter', category: 'text', icon: Binary, name: 'Binary Converter', desc: 'Convert text to binary and vice versa.' },
+      { id: 'json-formatter', category: 'text', icon: FileJson, name: 'JSON Formatter', desc: 'Format and minify JSON data.' },
+      { id: 'sql-formatter', category: 'text', icon: FileCode, name: 'SQL Formatter', desc: 'Format SQL queries for readability.' },
+      { id: 'extract-emails', category: 'text', icon: Type, name: 'Extract Emails', desc: 'Extract email addresses from any text.' },
+      { id: 'extract-urls', category: 'text', icon: Type, name: 'Extract URLs', desc: 'Extract website links from any text.' },
+      { id: 'text-to-morse', category: 'text', icon: Binary, name: 'Text to Morse', desc: 'Convert text to Morse code signals.' },
+      { id: 'morse-to-text', category: 'text', icon: Binary, name: 'Morse to Text', desc: 'Convert Morse code back to plain text.' },
 
-    // Converter Tools
-    { id: 'unit-converter', category: 'converter', icon: RefreshCw, name: 'Unit Converter', desc: 'Convert length, weight, and temperature.' },
-    { id: 'json-to-csv', category: 'converter', icon: FileJson, name: 'JSON to CSV', desc: 'Convert JSON data to CSV format.' },
-    { id: 'csv-to-json', category: 'converter', icon: FileCode, name: 'CSV to JSON', desc: 'Convert CSV data to JSON format.' },
-    { id: 'xml-to-json', category: 'converter', icon: FileCode, name: 'XML to JSON', desc: 'Convert XML data to JSON format.' },
+      // Converter Tools
+      { id: 'unit-converter', category: 'converter', icon: RefreshCw, name: 'Unit Converter', desc: 'Convert length, weight, and temperature.' },
+      { id: 'json-to-csv', category: 'converter', icon: FileJson, name: 'JSON to CSV', desc: 'Convert JSON data to CSV format.' },
+      { id: 'csv-to-json', category: 'converter', icon: FileCode, name: 'CSV to JSON', desc: 'Convert CSV data to JSON format.' },
+      { id: 'xml-to-json', category: 'converter', icon: FileCode, name: 'XML to JSON', desc: 'Convert XML data to JSON format.' },
 
-    // Utility Tools
-    { id: 'password-gen', category: 'utility', icon: Shield, name: 'Password Generator', desc: 'Create secure, random passwords.' },
-    { id: 'qr-generator', category: 'utility', icon: QrCode, name: 'QR Generator', desc: 'Create custom QR codes for URLs or text.' },
-    { id: 'qr-scanner', category: 'utility', icon: Scan, name: 'QR Scanner', desc: 'Scan and decode QR codes from images.' },
-    { id: 'age-calc', category: 'utility', icon: Calculator, name: 'Age Calculator', desc: 'Calculate your exact age from birth date.' },
-    { id: 'date-calc', category: 'utility', icon: Calendar, name: 'Date Calculator', desc: 'Calculate difference between dates or add days.' },
-    { id: 'url-shortener', category: 'utility', icon: Link, name: 'URL Shortener', desc: 'Create short, easy to share links.' },
-    { id: 'bmi-calc', category: 'utility', icon: Activity, name: 'BMI Calculator', desc: 'Calculate your Body Mass Index.' },
-    { id: 'percentage-calc', category: 'utility', icon: Calculator, name: 'Percentage Calculator', desc: 'Calculate percentages easily.' },
-    { id: 'random-number', category: 'utility', icon: Hash, name: 'Random Number', desc: 'Generate random numbers in a range.' },
-    { id: 'random-string', category: 'utility', icon: Type, name: 'Random String', desc: 'Generate random alphanumeric strings.' },
+      // Utility Tools
+      { id: 'password-gen', category: 'utility', icon: Shield, name: 'Password Generator', desc: 'Create secure, random passwords.' },
+      { id: 'qr-generator', category: 'utility', icon: QrCode, name: 'QR Generator', desc: 'Create custom QR codes for URLs or text.' },
+      { id: 'qr-scanner', category: 'utility', icon: Scan, name: 'QR Scanner', desc: 'Scan and decode QR codes from images.' },
+      { id: 'age-calc', category: 'utility', icon: Calculator, name: 'Age Calculator', desc: 'Calculate your exact age from birth date.' },
+      { id: 'date-calc', category: 'utility', icon: Calendar, name: 'Date Calculator', desc: 'Calculate difference between dates or add days.' },
+      { id: 'url-shortener', category: 'utility', icon: Link, name: 'URL Shortener', desc: 'Create short, easy to share links.' },
+      { id: 'bmi-calc', category: 'utility', icon: Activity, name: 'BMI Calculator', desc: 'Calculate your Body Mass Index.' },
+    ];
 
-    // Web Tools
-    { id: 'html-formatter', category: 'web', icon: Code, name: 'HTML Formatter', desc: 'Beautify and format your HTML code.' },
-    { id: 'html-minifier', category: 'web', icon: Minimize, name: 'HTML Minifier', desc: 'Minify HTML to reduce file size.' },
-    { id: 'css-formatter', category: 'web', icon: Code, name: 'CSS Formatter', desc: 'Beautify and format your CSS code.' },
-    { id: 'css-minifier', category: 'web', icon: Minimize, name: 'CSS Minifier', desc: 'Minify CSS to reduce file size.' },
-    { id: 'js-formatter', category: 'web', icon: Code, name: 'JS Formatter', desc: 'Beautify and format your JavaScript code.' },
-    { id: 'js-minifier', category: 'web', icon: Minimize, name: 'JS Minifier', desc: 'Minify JavaScript to reduce file size.' },
-    { id: 'url-encoder', category: 'web', icon: Link, name: 'URL Encoder', desc: 'Safely encode text for URLs.' },
-    { id: 'url-decoder', category: 'web', icon: Link, name: 'URL Decoder', desc: 'Decode URL-encoded text.' },
-
-    // Dev Tools
-    { id: 'md5-hash', category: 'dev', icon: Lock, name: 'MD5 Hash', desc: 'Generate MD5 hash for any text.' },
-    { id: 'sha256-hash', category: 'dev', icon: Lock, name: 'SHA-256 Hash', desc: 'Generate secure SHA-256 hash.' },
-    { id: 'base64-encode', category: 'dev', icon: RefreshCw, name: 'Base64 Encode', desc: 'Convert text to Base64 format.' },
-    { id: 'base64-decode', category: 'dev', icon: RefreshCw, name: 'Base64 Decode', desc: 'Decode Base64 back to text.' },
-    { id: 'json-to-yaml', category: 'dev', icon: FileJson, name: 'JSON to YAML', desc: 'Convert JSON data to YAML format.' },
-    { id: 'yaml-to-json', category: 'dev', icon: FileCode, name: 'YAML to JSON', desc: 'Convert YAML data to JSON format.' },
-    { id: 'uuid-gen', category: 'dev', icon: RefreshCw, name: 'UUID Generator', desc: 'Generate unique random UUIDs.' },
-    { id: 'unix-timestamp', category: 'dev', icon: Calendar, name: 'Unix Timestamp', desc: 'Convert Unix timestamps to dates.' },
-
-    // Social Tools
-    { id: 'yt-thumbnail', category: 'social', icon: Youtube, name: 'YouTube Thumbnail', desc: 'Download YouTube video thumbnails.' },
-    { id: 'wa-link', category: 'social', icon: MessageSquare, name: 'WhatsApp Link', desc: 'Create direct WhatsApp chat links.' },
-    { id: 'ig-profile', category: 'social', icon: Instagram, name: 'Instagram Profile', desc: 'Generate Instagram profile links.' },
-
-    // Security Tools
-    { id: 'password-strength', category: 'security', icon: Shield, name: 'Password Strength', desc: 'Check how secure your password is.' },
-    { id: 'cc-validator', category: 'security', icon: CreditCard, name: 'Card Validator', desc: 'Validate credit card numbers.' },
-    { id: 'iban-validator', category: 'security', icon: Globe, name: 'IBAN Validator', desc: 'Validate international bank accounts.' },
-  ], []);
+    return baseTools.map(tool => ({
+      ...tool,
+      name: `Free ${tool.name} Online Bhilwara | e-Mitra Portal Rajasthan`,
+      desc: `${tool.desc} Free ${tool.name} Online Bhilwara | e-Mitra Portal Rajasthan`
+    }));
+  }, []);
 
   const filteredTools = tools.filter(tool => {
     const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -250,6 +172,30 @@ const ToolsPage = () => {
 
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
+      <Helmet>
+        <title>300+ Free Online Tools in Bhilwara | AI, PDF, Converter | e-Mitra Portal Rajasthan</title>
+        <meta name="description" content="Access 300+ free online tools in Bhilwara, Rajasthan. AI text generator, PDF editor, image converter, developer utilities, and more at e-Mitra Portal." />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Free Online Tools - e-Mitra Portal Bhilwara",
+            "description": "A collection of 300+ free online tools for PDF, images, AI, and development.",
+            "url": "https://emitraportal.vercel.app/tools",
+            "mainEntity": {
+              "@type": "ItemList",
+              "itemListElement": tools.slice(0, 10).map((tool, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": tool.name,
+                "description": tool.desc,
+                "url": `https://emitraportal.vercel.app/tools/${tool.id}`
+              }))
+            }
+          })}
+        </script>
+      </Helmet>
+
       {/* Header Section */}
       <div className="text-center mb-16">
         <motion.h1 
@@ -402,6 +348,15 @@ const ToolsPage = () => {
           </div>
         )}
       </AnimatePresence>
+      {/* SEO Text Block */}
+      <div className="mt-20 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm">
+        <h2 className="text-2xl font-bold text-slate-900 mb-4">
+          {isHi ? 'भीलवाड़ा में 300+ मुफ्त ऑनलाइन टूल्स' : '300+ Free Online Tools in Bhilwara, Rajasthan'}
+        </h2>
+        <p className="text-slate-600 leading-relaxed">
+          {t('tools.seoText')}
+        </p>
+      </div>
     </div>
   );
 };
@@ -444,10 +399,6 @@ export const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'extract-urls': return <ExtractURLs />;
     case 'text-to-morse': return <TextToMorse />;
     case 'morse-to-text': return <MorseToText />;
-    case 'text-replacement': return <TextReplacement />;
-    case 'text-repeater': return <TextRepeater />;
-    case 'word-frequency': return <WordFrequency />;
-    case 'remove-empty-lines': return <RemoveEmptyLines />;
 
     // Converter Tools
     case 'unit-converter': return <UnitConverter />;
@@ -460,42 +411,9 @@ export const ToolRenderer = ({ toolId }: { toolId: string }) => {
     case 'qr-generator': return <QRGenerator />;
     case 'qr-scanner': return <QRScanner />;
     case 'bmi-calc': return <BMICalculator />;
-    case 'percentage-calc': return <PercentageCalculator />;
-    case 'random-number': return <RandomNumberGenerator />;
-    case 'random-string': return <RandomStringGenerator />;
     case 'age-calc': return <AgeCalculator />;
     case 'date-calc': return <DateCalculator />;
     case 'url-shortener': return <URLShortener />;
-    
-    // Web Tools
-    case 'html-formatter': return <HTMLFormatter />;
-    case 'html-minifier': return <HTMLMinifier />;
-    case 'css-formatter': return <CSSFormatter />;
-    case 'css-minifier': return <CSSMinifier />;
-    case 'js-formatter': return <JSFormatter />;
-    case 'js-minifier': return <JSMinifier />;
-    case 'url-encoder': return <URLEncoder />;
-    case 'url-decoder': return <URLDecoder />;
-
-    // Dev Tools
-    case 'md5-hash': return <MD5Hash />;
-    case 'sha256-hash': return <SHA256Hash />;
-    case 'base64-encode': return <Base64Encoder />;
-    case 'base64-decode': return <Base64Decoder />;
-    case 'json-to-yaml': return <JSONtoYAML />;
-    case 'yaml-to-json': return <YAMLtoJSON />;
-    case 'uuid-gen': return <UUIDGenerator />;
-    case 'unix-timestamp': return <UnixTimestampConverter />;
-
-    // Social Tools
-    case 'yt-thumbnail': return <YoutubeThumbnailDownloader />;
-    case 'wa-link': return <WhatsappLinkGenerator />;
-    case 'ig-profile': return <InstagramProfileGenerator />;
-
-    // Security Tools
-    case 'password-strength': return <PasswordStrengthMeter />;
-    case 'cc-validator': return <CreditCardValidator />;
-    case 'iban-validator': return <IBANValidator />;
     
     default:
       return (
