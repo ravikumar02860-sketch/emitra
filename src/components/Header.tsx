@@ -26,7 +26,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2 group relative z-[60]">
+          <a href="/index.html" className="flex items-center gap-2 group relative z-[60]">
             <div className="p-2 bg-indigo-600 rounded-lg text-white group-hover:rotate-12 transition-transform">
               <Globe size={24} />
             </div>

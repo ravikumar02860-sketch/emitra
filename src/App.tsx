@@ -33,6 +33,9 @@ const ToolSEOPage = lazy(() => import('./pages/ToolSEOPage'));
 const ToolPage = lazy(() => import('./pages/ToolPage'));
 const GuidePage = lazy(() => import('./pages/GuidePage'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
+const JobsPage = lazy(() => import('./pages/JobsPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 const ServiceDetail = ({ id, title, icon: Icon, about, who, docs, steps, notes, website, searchQuery }: any) => {
   const { t } = useLanguage();
@@ -549,22 +552,22 @@ function App() {
   } else if (pathname.endsWith('tools.html') || pathname === '/tools' || pathname === '/tools.html') {
     content = <ToolsPage />;
   } else if (pathname.endsWith('jobs.html') || pathname === '/jobs' || pathname === '/jobs.html') {
-    content = <Home />; // Default to Home if jobs page is not explicitly defined yet
+    content = <JobsPage />;
   } else if (pathname.startsWith('/tools/')) {
     const toolId = pathname.split('/').pop()?.replace('.html', '');
     content = <ToolPage toolId={toolId} />;
   } else if (pathname.startsWith('/guides/')) {
     const toolId = pathname.split('/').pop()?.replace('.html', '');
     content = <GuidePage toolId={toolId} />;
-  } else if (pathname === '/pdf-tools') {
+  } else if (pathname === '/pdf-tools' || pathname === '/pdf-tools.html') {
     content = <CategoryPage category="pdf" />;
-  } else if (pathname === '/image-tools') {
+  } else if (pathname === '/image-tools' || pathname === '/image-tools.html') {
     content = <CategoryPage category="image" />;
-  } else if (pathname === '/text-tools') {
+  } else if (pathname === '/text-tools' || pathname === '/text-tools.html') {
     content = <CategoryPage category="text" />;
-  } else if (pathname === '/converter-tools') {
+  } else if (pathname === '/converter-tools' || pathname === '/converter-tools.html') {
     content = <CategoryPage category="converter" />;
-  } else if (pathname === '/utility-tools') {
+  } else if (pathname === '/utility-tools' || pathname === '/utility-tools.html') {
     content = <CategoryPage category="utility" />;
   } else if (pathname.includes('-tool.html') || pathname.endsWith('-tool')) {
     const toolId = pathname.split('/').pop()?.replace('-tool.html', '').replace('-tool', '');

@@ -36,7 +36,7 @@ const Home: React.FC = () => {
                 {t('hero.whatsapp')}
               </a>
               <a 
-                href="services"
+                href="/services.html"
                 className="inline-flex items-center gap-2 bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold border border-indigo-100 hover:bg-slate-50 transition-colors active:scale-95"
               >
                 {t('hero.cta')}
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
               <h2 className="font-sans font-bold text-4xl text-slate-900 mt-2">{t('home.servicesTitle')}</h2>
             </div>
             <a 
-              href="services"
+              href="/services.html"
               className="text-indigo-600 font-bold flex items-center gap-1 hover:gap-2 transition-all"
             >
               {t('home.viewAll')} <ArrowRight size={20} />
@@ -90,7 +90,7 @@ const Home: React.FC = () => {
                 {t('home.aadhaarDesc')}
               </p>
               <a 
-                href="services#aadhaar"
+                href="/services.html#aadhaar"
                 className="text-indigo-600 font-semibold flex items-center gap-1"
               >
                 View More <ChevronRight size={16} />
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
                 {t('home.panDesc')}
               </p>
               <a 
-                href="services#pan"
+                href="/services.html#pan"
                 className="text-indigo-600 font-semibold flex items-center gap-1"
               >
                 View More <ChevronRight size={16} />
@@ -128,7 +128,7 @@ const Home: React.FC = () => {
                 {t('home.examDesc')}
               </p>
               <a 
-                href="services#exams"
+                href="/services.html#exams"
                 className="text-indigo-600 font-semibold flex items-center gap-1"
               >
                 View More <ChevronRight size={16} />
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold mb-3">PM Surya Ghar</h3>
               <p className="text-slate-600 text-sm mb-6">{t('home.suryaDesc')}</p>
-              <a href="services#surya-ghar" className="text-indigo-600 font-bold text-sm flex items-center gap-2">
+              <a href="/services.html#surya-ghar" className="text-indigo-600 font-bold text-sm flex items-center gap-2">
                 Learn More <ArrowRight size={16} />
               </a>
             </div>
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold mb-3">Kusum Yojana</h3>
               <p className="text-slate-600 text-sm mb-6">{t('home.kusumDesc')}</p>
-              <a href="services#kusum-yojana" className="text-indigo-600 font-bold text-sm flex items-center gap-2">
+              <a href="/services.html#kusum-yojana" className="text-indigo-600 font-bold text-sm flex items-center gap-2">
                 Learn More <ArrowRight size={16} />
               </a>
             </div>
@@ -175,7 +175,7 @@ const Home: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold mb-3">Food Security (NFSA)</h3>
               <p className="text-slate-600 text-sm mb-6">{t('home.nfsaDesc')}</p>
-              <a href="forms" className="text-indigo-600 font-bold text-sm flex items-center gap-2">
+              <a href="/forms.html" className="text-indigo-600 font-bold text-sm flex items-center gap-2">
                 Download Form <ArrowRight size={16} />
               </a>
             </div>

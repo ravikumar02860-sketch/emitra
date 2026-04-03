@@ -20,6 +20,12 @@ export default defineConfig(({mode}) => {
     return acc;
   }, {} as Record<string, string>);
 
+  const guidesHtmlFiles = glob.sync('guides/*.html').reduce((acc, file) => {
+    const name = `guides/${path.basename(file, '.html')}`;
+    acc[name] = path.resolve(__dirname, file);
+    return acc;
+  }, {} as Record<string, string>);
+
   return {
     base: './',
     plugins: [react(), tailwindcss()],
@@ -31,6 +37,7 @@ export default defineConfig(({mode}) => {
         input: {
           ...rootHtmlFiles,
           ...toolsHtmlFiles,
+          ...guidesHtmlFiles,
         },
         output: {
           manualChunks: {
