@@ -97,13 +97,13 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category }) => {
                 </p>
                 <div className="flex flex-col gap-3">
                   <a 
-                    href={`/tools/${toolId}.html`} 
+                    href={`/tools/${toolId}`} 
                     className="w-full py-4 px-6 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all flex items-center justify-center gap-2"
                   >
                     Use Tool <ArrowRight size={18} />
                   </a>
                   <a 
-                    href={`/guides/${toolId}.html`} 
+                    href={`/guides/${toolId}`} 
                     className="w-full py-4 px-6 bg-slate-50 text-slate-600 rounded-2xl font-bold hover:bg-slate-100 transition-all text-center text-sm"
                   >
                     Read Guide

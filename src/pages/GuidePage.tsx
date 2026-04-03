@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle, Wrench, ListChecks, Info } from 'lucide-react';
-import Markdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 
 interface GuidePageProps {
@@ -17,7 +17,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Guide Not Found</h1>
         <p className="text-slate-600 mb-8">The guide you are looking for does not exist.</p>
-        <a href="/tools.html" className="text-indigo-600 font-bold mb-8 hover:underline">Go back to Tools</a>
+        <a href="/tools.html" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
   }
@@ -44,7 +44,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
             Follow our comprehensive guide to master the {content.toolName} tool. Learn how to get the best results in seconds.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a href={`/tools/${toolId}.html`} className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center gap-2">
+            <a href={`/tools/${toolId}`} className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center gap-2">
               <Wrench size={20} /> Try {content.toolName} Tool
             </a>
           </div>
@@ -99,7 +99,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
               <h2 className="text-3xl font-black text-slate-900">How It Works</h2>
             </div>
             <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed text-lg">
-              <Markdown>{content.howItWorks}</Markdown>
+              <ReactMarkdown>{content.howItWorks}</ReactMarkdown>
             </div>
           </section>
 
@@ -173,7 +173,7 @@ const GuidePage: React.FC<GuidePageProps> = ({ toolId }) => {
           {/* Internal Tool Link */}
           <section className="text-center py-10 bg-white rounded-3xl border border-slate-200 shadow-sm">
             <h2 className="text-3xl font-black text-slate-900 mb-6">Try our free {content.toolName} Tool here.</h2>
-            <a href={`/tools/${toolId}.html`} className="inline-block bg-indigo-600 text-white px-10 py-5 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-xl text-lg">
+            <a href={`/tools/${toolId}`} className="inline-block bg-indigo-600 text-white px-10 py-5 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-xl text-lg">
               Open {content.toolName}
             </a>
           </section>

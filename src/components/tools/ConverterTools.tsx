@@ -16,7 +16,7 @@ export const UnitConverter = () => {
     temp: { c: 'Celsius', f: 'Fahrenheit', k: 'Kelvin' }
   };
 
-  React.useEffect(() => {
+  useMemo(() => {
     if (type === 'length') { setFrom('m'); setTo('km'); }
     else if (type === 'weight') { setFrom('kg'); setTo('lb'); }
     else { setFrom('c'); setTo('f'); }

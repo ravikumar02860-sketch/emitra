@@ -1,501 +1,168 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense, lazy } from 'react';
 import { 
-  Search, 
-  ArrowRight, 
   FileText, 
   Image as ImageIcon, 
-  Code, 
-  Settings, 
-  Shield, 
-  Zap, 
-  Globe, 
-  Share2, 
-  X, 
-  Star, 
-  Clock, 
+  Type, 
+  RefreshCw, 
+  Wrench, 
+  Search, 
+  FileUp, 
+  Download, 
+  Copy, 
   Check, 
-  MessageSquare,
-  Lock,
-  Terminal,
-  Layout,
+  Loader2,
+  ArrowRight,
+  RotateCw,
+  Scissors,
+  Merge,
+  Maximize,
+  Minimize,
+  QrCode,
   Hash,
-  Type,
-  FileSearch,
+  Calculator,
+  Clock,
+  Calendar,
+  Link,
+  Shield,
+  Languages,
   FileJson,
   FileCode,
-  FileText as FileTextIcon,
-  Sparkles,
-  Link as LinkIcon,
-  Mail,
-  CreditCard,
-  Key,
-  RefreshCw,
-  Trash2,
   Binary,
-  Volume2,
-  ArrowRightLeft,
-  Loader2,
-  Calculator,
   Activity,
-  Calendar,
-  Scan
+  Volume2,
+  Scan,
+  BookOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '../context/LanguageContext';
 
-// Tool Components Imports
-import { 
-  MergePDF, 
-  SplitPDF, 
-  RotatePDF, 
-  CompressPDF, 
-  PDFtoJPG, 
-  JPGtoPDF,
-  PDFtoWord,
-  WordtoPDF,
-  PDFtoText
-} from '../components/tools/PDFTools';
-import { 
-  AITextGen, 
-  AIImageGen, 
-  AISummarizer 
-} from '../components/tools/AITools';
-import { 
-  MD5Hash, 
-  SHA256Hash, 
-  Base64Encoder, 
-  Base64Decoder, 
-  JSONtoYAML, 
-  YAMLtoJSON, 
-  UUIDGenerator, 
-  UnixTimestampConverter 
-} from '../components/tools/DevTools';
-import { 
-  ImageResizer, 
-  ImageConverter, 
-  ImageCompressor, 
-  ImageToBase64,
-  ImageFilters,
-  ImageCropper,
-  ImageToText
-} from '../components/tools/ImageTools';
-import { 
-  CaseConverter, 
-  WordCounter, 
-  LoremIpsumGenerator, 
-  TextToSpeech, 
-  RemoveDuplicateLines, 
-  ReverseText, 
-  BinaryConverter, 
-  JsonFormatter, 
-  SqlFormatter, 
-  ExtractEmails, 
-  ExtractURLs, 
-  TextToMorse,
-  MorseToText 
-} from '../components/tools/TextTools';
-import { 
-  UnitConverter,
-  JsonCsvConverter,
-  XmlJsonConverter,
-  Base64ToImage
-} from '../components/tools/ConverterTools';
-import {
-  PasswordGenerator,
-  BMICalculator,
-  AgeCalculator,
-  QRGenerator,
-  DateCalculator,
-  URLShortener,
-  QRScanner as QRScannerUtil,
-  PercentageCalculator,
-  RandomNumberGenerator,
-  RandomStringGenerator
-} from '../components/tools/UtilityTools';
-import { 
-  YoutubeThumbnailDownloader, 
-  WhatsappLinkGenerator, 
-  InstagramProfileGenerator 
-} from '../components/tools/SocialTools';
-import { 
-  PasswordStrengthMeter, 
-  CreditCardValidator, 
-  IBANValidator 
-} from '../components/tools/SecurityTools';
-import { 
-  HTMLFormatter, 
-  HTMLMinifier, 
-  CSSFormatter, 
-  CSSMinifier, 
-  JSFormatter, 
-  JSMinifier, 
-  URLEncoder, 
-  URLDecoder 
-} from '../components/tools/WebTools';
-import { toolSEOContent } from '../data/toolSEOContent';
+// Lazy load tool components
+const MergePDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.MergePDF })));
+const SplitPDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.SplitPDF })));
+const RotatePDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.RotatePDF })));
+const JPGtoPDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.JPGtoPDF })));
+const CompressPDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.CompressPDF })));
+const PDFtoJPG = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.PDFtoJPG })));
+const PDFtoWord = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.PDFtoWord })));
+const WordtoPDF = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.WordtoPDF })));
+const PDFtoText = lazy(() => import('../components/tools/PDFTools').then(module => ({ default: module.PDFtoText })));
 
-// Tool definitions
-const tools = [
-  // PDF Tools
-  { id: 'merge-pdf', name: 'Merge PDF', description: 'Combine multiple PDF files into one single document instantly.', category: 'pdf', icon: FileText, popular: true },
-  { id: 'split-pdf', name: 'Split PDF', description: 'Extract specific pages or split your PDF into multiple files.', category: 'pdf', icon: FileText },
-  { id: 'rotate-pdf', name: 'Rotate PDF', description: 'Rotate PDF pages permanently in any direction.', category: 'pdf', icon: FileText },
-  { id: 'compress-pdf', name: 'Compress PDF', description: 'Reduce PDF file size while maintaining document quality.', category: 'pdf', icon: FileText, popular: true },
-  { id: 'pdf-to-jpg', name: 'PDF to JPG', description: 'Convert PDF pages into high-quality JPG images.', category: 'pdf', icon: ImageIcon },
-  { id: 'jpg-to-pdf', name: 'JPG to PDF', description: 'Convert JPG images to a professional PDF document.', category: 'pdf', icon: FileText },
-  { id: 'pdf-to-word', name: 'PDF to Word', description: 'Convert PDF documents to editable Microsoft Word files.', category: 'pdf', icon: FileTextIcon },
-  { id: 'word-to-pdf', name: 'Word to PDF', description: 'Convert Word documents (.docx) to PDF format.', category: 'pdf', icon: FileTextIcon },
-  { id: 'pdf-to-text', name: 'PDF to Text', description: 'Extract plain text from your PDF documents.', category: 'pdf', icon: Type },
+const ImageCompressor = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageCompressor })));
+const ImageResizer = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageResizer })));
+const ImageConverter = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageConverter })));
+const ImageToBase64 = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageToBase64 })));
+const ImageFilters = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageFilters })));
+const ImageCropper = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageCropper })));
+const ImageToText = lazy(() => import('../components/tools/ImageTools').then(module => ({ default: module.ImageToText })));
 
-  // Image Tools
-  { id: 'image-resizer', name: 'Image Resizer', description: 'Change image dimensions for social media or web.', category: 'image', icon: ImageIcon, popular: true },
-  { id: 'image-converter', name: 'Image Converter', description: 'Convert between JPG, PNG, WEBP, and more.', category: 'image', icon: ImageIcon },
-  { id: 'image-compressor', name: 'Image Compressor', description: 'Reduce image file size without losing quality.', category: 'image', icon: ImageIcon, popular: true },
-  { id: 'image-to-pdf', name: 'Image to PDF', description: 'Convert JPG, PNG, and other images to PDF.', category: 'image', icon: FileText },
-  { id: 'qr-generator', name: 'QR Code Generator', description: 'Create custom QR codes for URLs, text, or Wi-Fi.', category: 'image', icon: Layout },
-  { id: 'qr-scanner', name: 'QR Code Scanner', description: 'Scan and decode QR codes from images or camera.', category: 'image', icon: FileSearch },
-  { id: 'image-to-text', name: 'Image to Text (OCR)', description: 'Extract text from images using advanced OCR.', category: 'image', icon: Type },
-  { id: 'image-to-base64', name: 'Image to Base64', description: 'Convert images to Base64 strings for web use.', category: 'image', icon: Code },
-  { id: 'image-filters', name: 'Image Filters', description: 'Apply beautiful filters and effects to your images.', category: 'image', icon: Sparkles },
-  { id: 'image-cropper', name: 'Image Cropper', description: 'Crop images to specific aspect ratios or custom sizes.', category: 'image', icon: ImageIcon },
+const UnitConverter = lazy(() => import('../components/tools/ConverterTools').then(module => ({ default: module.UnitConverter })));
+const JsonCsvConverter = lazy(() => import('../components/tools/ConverterTools').then(module => ({ default: module.JsonCsvConverter })));
+const XmlJsonConverter = lazy(() => import('../components/tools/ConverterTools').then(module => ({ default: module.XmlJsonConverter })));
+const Base64ToImage = lazy(() => import('../components/tools/ConverterTools').then(module => ({ default: module.Base64ToImage })));
 
-  // AI Tools
-  { id: 'ai-text', name: 'AI Text Generator', description: 'Generate blogs, emails, and creative content with AI.', category: 'ai', icon: Sparkles, popular: true },
-  { id: 'ai-image', name: 'AI Image Generator', description: 'Create stunning images from text prompts using AI.', category: 'ai', icon: Sparkles, popular: true },
-  { id: 'ai-summarizer', name: 'AI Summarizer', description: 'Summarize long articles and documents instantly.', category: 'ai', icon: FileSearch },
+const WordCounter = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.WordCounter })));
+const CaseConverter = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.CaseConverter })));
+const LoremIpsumGenerator = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.LoremIpsumGenerator })));
+const TextToSpeech = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextToSpeech })));
+const RemoveDuplicateLines = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.RemoveDuplicateLines })));
+const ReverseText = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.ReverseText })));
+const BinaryConverter = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.BinaryConverter })));
+const JsonFormatter = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.JsonFormatter })));
+const SqlFormatter = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.SqlFormatter })));
+const ExtractEmails = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.ExtractEmails })));
+const ExtractURLs = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.ExtractURLs })));
+const TextToMorse = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.TextToMorse })));
+const MorseToText = lazy(() => import('../components/tools/TextTools').then(module => ({ default: module.MorseToText })));
 
-  // Text Tools
-  { id: 'word-counter', name: 'Word Counter', description: 'Count words, characters, and lines in your text.', category: 'text', icon: Hash },
-  { id: 'case-converter', name: 'Case Converter', description: 'Convert text to UPPERCASE, lowercase, Title Case, etc.', category: 'text', icon: Type },
-  { id: 'lorem-ipsum', name: 'Lorem Ipsum Generator', description: 'Generate placeholder text for your designs.', category: 'text', icon: Type },
-  { id: 'text-to-speech', name: 'Text to Speech', description: 'Convert written text into natural-sounding audio.', category: 'text', icon: Volume2 },
-  { id: 'remove-duplicates', name: 'Remove Duplicate Lines', description: 'Clean up lists by removing duplicate entries.', category: 'text', icon: Trash2 },
-  { id: 'reverse-text', name: 'Reverse Text', description: 'Flip your text backwards or reverse word order.', category: 'text', icon: ArrowRightLeft },
-  { id: 'binary-converter', name: 'Binary Converter', description: 'Convert text to binary and binary back to text.', category: 'text', icon: Binary },
-  { id: 'json-formatter', name: 'JSON Formatter', description: 'Beautify and validate your JSON data.', category: 'text', icon: FileJson },
-  { id: 'sql-formatter', name: 'SQL Formatter', description: 'Format and beautify your SQL queries.', category: 'text', icon: Terminal },
-  { id: 'extract-emails', name: 'Extract Emails', description: 'Find all email addresses from any block of text.', category: 'text', icon: Mail },
-  { id: 'extract-urls', name: 'Extract URLs', description: 'Find all website links from any block of text.', category: 'text', icon: LinkIcon },
-  { id: 'text-to-morse', name: 'Text to Morse', description: 'Convert text to Morse code and vice versa.', category: 'text', icon: Binary },
-  { id: 'morse-to-text', name: 'Morse to Text', description: 'Convert Morse code back to plain text.', category: 'text', icon: Binary },
+const PasswordGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.PasswordGenerator })));
+const BMICalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.BMICalculator })));
+const AgeCalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.AgeCalculator })));
+const DateCalculator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.DateCalculator })));
+const URLShortener = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.URLShortener })));
+const QRGenerator = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRGenerator })));
+const QRScanner = lazy(() => import('../components/tools/UtilityTools').then(module => ({ default: module.QRScanner })));
 
-  // Developer Tools
-  { id: 'md5-hash', name: 'MD5 Generator', description: 'Generate secure MD5 hashes for your data.', category: 'dev', icon: Lock },
-  { id: 'sha256-hash', name: 'SHA-256 Generator', description: 'Generate SHA-256 hashes for maximum security.', category: 'dev', icon: Lock },
-  { id: 'base64-encode', name: 'Base64 Encoder', description: 'Encode text strings into Base64 format.', category: 'dev', icon: Code },
-  { id: 'base64-decode', name: 'Base64 Decoder', description: 'Decode Base64 strings back to plain text.', category: 'dev', icon: Code },
-  { id: 'json-to-yaml', name: 'JSON to YAML', description: 'Convert between JSON and YAML formats.', category: 'dev', icon: FileCode },
-  { id: 'yaml-to-json', name: 'YAML to JSON', description: 'Convert YAML data back to JSON format.', category: 'dev', icon: FileCode },
-  { id: 'uuid-generator', name: 'UUID Generator', description: 'Generate unique version 4 UUIDs instantly.', category: 'dev', icon: Key },
-  { id: 'unix-timestamp', name: 'Unix Timestamp', description: 'Convert dates to Unix timestamps and back.', category: 'dev', icon: Clock },
-
-  // Web Tools
-  { id: 'html-formatter', name: 'HTML Formatter', description: 'Beautify messy HTML code for better readability.', category: 'web', icon: FileCode },
-  { id: 'html-minifier', name: 'HTML Minifier', description: 'Compress HTML code to improve website speed.', category: 'web', icon: FileCode },
-  { id: 'css-formatter', name: 'CSS Formatter', description: 'Beautify and structure your CSS stylesheets.', category: 'web', icon: FileCode },
-  { id: 'css-minifier', name: 'CSS Minifier', description: 'Minify CSS files for production performance.', category: 'web', icon: FileCode },
-  { id: 'js-formatter', name: 'JS Formatter', description: 'Beautify JavaScript code with proper indentation.', category: 'web', icon: Terminal },
-  { id: 'js-minifier', name: 'JS Minifier', description: 'Compress JavaScript files to reduce load time.', category: 'web', icon: Terminal },
-  { id: 'url-encoder', name: 'URL Encoder', description: 'Safely encode special characters for URLs.', category: 'web', icon: Globe },
-  { id: 'url-decoder', name: 'URL Decoder', description: 'Decode URL-encoded strings back to text.', category: 'web', icon: Globe },
-
-  // Security Tools
-  { id: 'password-strength', name: 'Password Strength', description: 'Check how secure your password really is.', category: 'security', icon: Shield },
-  { id: 'cc-validator', name: 'Credit Card Validator', description: 'Validate credit card numbers using Luhn algorithm.', category: 'security', icon: CreditCard },
-  { id: 'iban-validator', name: 'IBAN Validator', description: 'Validate International Bank Account Numbers.', category: 'security', icon: Globe },
-
-  // Social Media Tools
-  { id: 'yt-thumbnail', name: 'YouTube Thumbnail', description: 'Download thumbnails from any YouTube video URL.', category: 'social', icon: Share2 },
-  { id: 'wa-link', name: 'WhatsApp Link', description: 'Create direct chat links with custom messages.', category: 'social', icon: MessageSquare },
-  { id: 'ig-links', name: 'Instagram Links', description: 'Generate direct links to Instagram profiles.', category: 'social', icon: Share2 },
-
-  // Utility Tools
-  { id: 'unit-converter', name: 'Unit Converter', description: 'Convert length, weight, temperature, and more.', category: 'utility', icon: Settings },
-  { id: 'password-generator', name: 'Password Generator', description: 'Generate highly secure random passwords.', category: 'utility', icon: Lock },
-  { id: 'bmi-calculator', name: 'BMI Calculator', description: 'Calculate your Body Mass Index instantly.', category: 'utility', icon: Activity },
-  { id: 'age-calculator', name: 'Age Calculator', description: 'Calculate your exact age in years, months, and days.', category: 'utility', icon: Clock },
-  { id: 'date-calculator', name: 'Date Calculator', description: 'Add/subtract days or find difference between dates.', category: 'utility', icon: Calendar },
-  { id: 'url-shortener', name: 'URL Shortener', description: 'Create short, trackable links from long URLs.', category: 'utility', icon: LinkIcon },
-  { id: 'percentage-calculator', name: 'Percentage Calculator', description: 'Calculate percentages, increases, and decreases.', category: 'utility', icon: Calculator },
-  { id: 'random-number', name: 'Random Number', description: 'Generate random numbers within a custom range.', category: 'utility', icon: Hash },
-  { id: 'random-string', name: 'Random String', description: 'Generate random strings for passwords or keys.', category: 'utility', icon: Type },
-
-  // Converters (New)
-  { id: 'json-to-csv', name: 'JSON to CSV', description: 'Convert JSON data to CSV format easily.', category: 'utility', icon: FileJson },
-  { id: 'csv-to-json', name: 'CSV to JSON', description: 'Convert CSV files to JSON format.', category: 'utility', icon: FileJson },
-  { id: 'xml-to-json', name: 'XML to JSON', description: 'Convert XML documents to JSON format.', category: 'utility', icon: FileCode },
-  { id: 'json-to-xml', name: 'JSON to XML', description: 'Convert JSON data to XML format.', category: 'utility', icon: FileCode },
-  { id: 'base64-to-image', name: 'Base64 to Image', description: 'Convert Base64 strings back to viewable images.', category: 'utility', icon: ImageIcon },
+// Tool categories and their icons
+const CATEGORIES = [
+  { id: 'all', name: 'All Tools', icon: Wrench },
+  { id: 'pdf', name: 'PDF Tools', icon: FileText },
+  { id: 'image', name: 'Image Tools', icon: ImageIcon },
+  { id: 'text', name: 'Text Tools', icon: Type },
+  { id: 'converter', name: 'Converter Tools', icon: RefreshCw },
+  { id: 'utility', name: 'Utility Tools', icon: Wrench },
 ];
 
-class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: any, errorInfo: any) {
-    console.error("Tool Error:", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="p-12 text-center bg-red-50 rounded-[40px] border border-red-100">
-          <div className="p-4 bg-white rounded-2xl shadow-sm w-fit mx-auto mb-4">
-            <X size={32} className="text-red-500" />
-          </div>
-          <h3 className="text-xl font-black text-slate-900 mb-2">Something went wrong</h3>
-          <p className="text-slate-600 mb-6">This tool encountered an error and couldn't be loaded.</p>
-          <button 
-            onClick={() => this.setState({ hasError: false })}
-            className="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-700 transition-all"
-          >
-            Try Again
-          </button>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
-
-export const ToolRenderer = ({ toolId }: { toolId: string }) => {
-  return (
-    <ErrorBoundary>
-      <ToolContent toolId={toolId} />
-    </ErrorBoundary>
-  );
-};
-
-const ToolContent = ({ toolId }: { toolId: string }) => {
-  switch (toolId) {
-    // PDF Tools
-    case 'merge-pdf': return <MergePDF />;
-    case 'split-pdf': return <SplitPDF />;
-    case 'rotate-pdf': return <RotatePDF />;
-    case 'compress-pdf': return <CompressPDF />;
-    case 'pdf-to-jpg': return <PDFtoJPG />;
-    case 'jpg-to-pdf': return <JPGtoPDF />;
-    case 'pdf-to-word': return <PDFtoWord />;
-    case 'word-to-pdf': return <WordtoPDF />;
-    case 'pdf-to-text': return <PDFtoText />;
-
-    // AI Tools
-    case 'ai-text': return <AITextGen />;
-    case 'ai-image': return <AIImageGen />;
-    case 'ai-summarizer': return <AISummarizer />;
-
-    // Text Tools
-    case 'word-counter': return <WordCounter />;
-    case 'case-converter': return <CaseConverter />;
-    case 'lorem-ipsum': return <LoremIpsumGenerator />;
-    case 'text-to-speech': return <TextToSpeech />;
-    case 'remove-duplicates': return <RemoveDuplicateLines />;
-    case 'reverse-text': return <ReverseText />;
-    case 'binary-converter': return <BinaryConverter />;
-    case 'json-formatter': return <JsonFormatter />;
-    case 'sql-formatter': return <SqlFormatter />;
-    case 'extract-emails': return <ExtractEmails />;
-    case 'extract-urls': return <ExtractURLs />;
-    case 'text-to-morse': return <TextToMorse />;
-    case 'morse-to-text': return <MorseToText />;
-
-    // Image Tools
-    case 'image-resizer': return <ImageResizer />;
-    case 'image-converter': return <ImageConverter />;
-    case 'image-compressor': return <ImageCompressor />;
-    case 'image-to-pdf': return <JPGtoPDF />;
-    case 'qr-generator': return <QRGenerator />;
-    case 'qr-scanner': return <QRScannerUtil />;
-    case 'image-to-text': return <ImageToText />;
-    case 'image-to-base64': return <ImageToBase64 />;
-    case 'image-filters': return <ImageFilters />;
-    case 'image-cropper': return <ImageCropper />;
-
-    // Developer Tools
-    case 'md5-hash': return <MD5Hash />;
-    case 'sha256-hash': return <SHA256Hash />;
-    case 'base64-encode': return <Base64Encoder />;
-    case 'base64-decode': return <Base64Decoder />;
-    case 'json-to-yaml': return <JSONtoYAML />;
-    case 'yaml-to-json': return <YAMLtoJSON />;
-    case 'uuid-generator': return <UUIDGenerator />;
-    case 'unix-timestamp': return <UnixTimestampConverter />;
-
-    // Social Tools
-    case 'yt-thumbnail': return <YoutubeThumbnailDownloader />;
-    case 'wa-link': return <WhatsappLinkGenerator />;
-    case 'ig-links': return <InstagramProfileGenerator />;
-
-    // Security Tools
-    case 'password-strength': return <PasswordStrengthMeter />;
-    case 'cc-validator': return <CreditCardValidator />;
-    case 'iban-validator': return <IBANValidator />;
-
-    // Web Tools
-    case 'html-formatter': return <HTMLFormatter />;
-    case 'html-minifier': return <HTMLMinifier />;
-    case 'css-formatter': return <CSSFormatter />;
-    case 'css-minifier': return <CSSMinifier />;
-    case 'js-formatter': return <JSFormatter />;
-    case 'js-minifier': return <JSMinifier />;
-    case 'url-encoder': return <URLEncoder />;
-    case 'url-decoder': return <URLDecoder />;
-
-    // Utility Tools
-    case 'unit-converter': return <UnitConverter />;
-    case 'password-generator': return <PasswordGenerator />;
-    case 'bmi-calculator': return <BMICalculator />;
-    case 'age-calculator': return <AgeCalculator />;
-    case 'date-calculator': return <DateCalculator />;
-    case 'url-shortener': return <URLShortener />;
-    case 'percentage-calculator': return <PercentageCalculator />;
-    case 'random-number': return <RandomNumberGenerator />;
-    case 'random-string': return <RandomStringGenerator />;
-
-    // Converters
-    case 'json-to-csv': return <JsonCsvConverter mode="json-to-csv" />;
-    case 'csv-to-json': return <JsonCsvConverter mode="csv-to-json" />;
-    case 'xml-to-json': return <XmlJsonConverter mode="xml-to-json" />;
-    case 'json-to-xml': return <XmlJsonConverter mode="json-to-xml" />;
-    case 'base64-to-image': return <Base64ToImage />;
-
-    default: return <div className="text-center py-12 text-slate-500">Tool coming soon...</div>;
-  }
-};
-
-const GuideRenderer = ({ toolId }: { toolId: string }) => {
-  const content = toolSEOContent[toolId];
-  if (!content) return <div className="text-center py-12 text-slate-500">Guide coming soon...</div>;
-
-  return (
-    <div className="max-w-4xl mx-auto space-y-12 py-8">
-      <section className="space-y-4">
-        <h2 className="text-3xl font-black text-slate-900 tracking-tight">About {content.toolName}</h2>
-        <p className="text-lg text-slate-600 leading-relaxed">{content.introduction}</p>
-      </section>
-
-      <section className="space-y-6">
-        <h3 className="text-2xl font-bold text-slate-900">Key Features</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {content.features.map((feature, i) => (
-            <div key={i} className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
-              <h4 className="font-bold text-slate-900 mb-2">{feature.title}</h4>
-              <p className="text-sm text-slate-600">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="space-y-6">
-        <h3 className="text-2xl font-bold text-slate-900">How to Use</h3>
-        <div className="space-y-4">
-          {content.howToUseSteps.map((step, i) => (
-            <div key={i} className="flex gap-4 items-start">
-              <div className="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
-                {i + 1}
-              </div>
-              <p className="text-slate-600 pt-1">{step}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="space-y-6">
-        <h3 className="text-2xl font-bold text-slate-900">Frequently Asked Questions</h3>
-        <div className="space-y-4">
-          {content.faqs.map((faq, i) => (
-            <div key={i} className="p-6 bg-white border border-slate-200 rounded-3xl">
-              <h4 className="font-bold text-slate-900 mb-2">{faq.question}</h4>
-              <p className="text-slate-600">{faq.answer}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
-  );
-};
-
 const ToolsPage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
-  const [modalMode, setModalMode] = useState<'tool' | 'guide'>('tool');
 
-  // Categories definition
-  const categories = [
-    { id: 'all', name: t('tools.categories.all') || 'All Tools', icon: Zap },
-    { id: 'pdf', name: t('tools.categories.pdf') || 'PDF Tools', icon: FileText },
-    { id: 'image', name: t('tools.categories.image') || 'Image Tools', icon: ImageIcon },
-    { id: 'ai', name: t('tools.categories.ai') || 'AI Tools', icon: Sparkles },
-    { id: 'text', name: t('tools.categories.text') || 'Text Tools', icon: Type },
-    { id: 'dev', name: t('tools.categories.dev') || 'Developer', icon: Code },
-    { id: 'web', name: t('tools.categories.web') || 'Web Tools', icon: Globe },
-    { id: 'security', name: t('tools.categories.security') || 'Security', icon: Shield },
-    { id: 'social', name: t('tools.categories.social') || 'Social Media', icon: Share2 },
-    { id: 'utility', name: t('tools.categories.utility') || 'Utility', icon: Settings },
-  ];
+  const isHi = language === 'hi';
 
-  const filteredTools = useMemo(() => {
-    return tools.filter(tool => {
-      const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           tool.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = activeCategory === 'all' || tool.category === activeCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, activeCategory]);
+  // Tool definitions
+  const tools = useMemo(() => [
+    // PDF Tools
+    { id: 'merge-pdf', category: 'pdf', icon: Merge, name: 'Merge PDF', desc: 'Combine multiple PDF files into one.' },
+    { id: 'split-pdf', category: 'pdf', icon: Scissors, name: 'Split PDF', desc: 'Extract pages from your PDF or split into multiple files.' },
+    { id: 'rotate-pdf', category: 'pdf', icon: RotateCw, name: 'Rotate PDF', desc: 'Rotate your PDF pages to the correct orientation.' },
+    { id: 'compress-pdf', category: 'pdf', icon: Minimize, name: 'Compress PDF', desc: 'Optimize PDF structure to reduce file size.' },
+    { id: 'pdf-to-word', category: 'pdf', icon: FileText, name: 'PDF to Word', desc: 'Convert PDF documents to editable Word files.' },
+    { id: 'word-to-pdf', category: 'pdf', icon: FileUp, name: 'Word to PDF', desc: 'Convert Word documents to PDF format.' },
+    { id: 'pdf-to-text', category: 'pdf', icon: Type, name: 'PDF to Text', desc: 'Extract plain text from your PDF file.' },
+    { id: 'pdf-to-jpg', category: 'pdf', icon: ImageIcon, name: 'PDF to JPG', desc: 'Convert PDF pages into JPG images.' },
+    { id: 'jpg-to-pdf', category: 'pdf', icon: FileText, name: 'JPG to PDF', desc: 'Convert JPG images to PDF documents.' },
 
-  const openModal = (toolId: string, mode: 'tool' | 'guide') => {
-    setSelectedTool(toolId);
-    setModalMode(mode);
-    document.body.style.overflow = 'hidden';
-    if (mode === 'tool') {
-      window.history.pushState({}, '', `/tools/${toolId}.html`);
-    } else {
-      window.history.pushState({}, '', `/guides/${toolId}.html`);
-    }
-  };
+    // Image Tools
+    { id: 'image-compressor', category: 'image', icon: Minimize, name: 'Image Compressor', desc: 'Compress images to reduce file size.' },
+    { id: 'image-resizer', category: 'image', icon: Maximize, name: 'Image Resizer', desc: 'Resize images to specific dimensions.' },
+    { id: 'image-converter', category: 'image', icon: RefreshCw, name: 'Image Converter', desc: 'Convert images between PNG, JPG, WebP.' },
+    { id: 'image-filters', category: 'image', icon: ImageIcon, name: 'Image Filters', desc: 'Apply filters like grayscale, sepia, and blur.' },
+    { id: 'image-cropper', category: 'image', icon: Scissors, name: 'Image Cropper', desc: 'Crop images to specific aspect ratios.' },
+    { id: 'image-to-text', category: 'image', icon: Type, name: 'Image to Text', desc: 'Extract text from images using OCR.' },
+    { id: 'image-to-base64', category: 'image', icon: Binary, name: 'Image to Base64', desc: 'Convert images to Base64 strings.' },
+    { id: 'base64-to-image', category: 'image', icon: ImageIcon, name: 'Base64 to Image', desc: 'Convert Base64 strings back to images.' },
 
-  const closeModal = () => {
-    setSelectedTool(null);
-    document.body.style.overflow = 'auto';
-    window.history.pushState({}, '', '/tools.html');
-  };
+    // Text Tools
+    { id: 'word-counter', category: 'text', icon: Hash, name: 'Word Counter', desc: 'Count words, characters, and lines in your text.' },
+    { id: 'case-converter', category: 'text', icon: Type, name: 'Case Converter', desc: 'Change text case (UPPER, lower, Title, etc.).' },
+    { id: 'lorem-ipsum-generator', category: 'text', icon: FileText, name: 'Lorem Ipsum', desc: 'Generate placeholder text for your designs.' },
+    { id: 'text-to-speech', category: 'text', icon: Volume2, name: 'Text to Speech', desc: 'Convert text into spoken audio.' },
+    { id: 'remove-duplicate-lines', category: 'text', icon: Scissors, name: 'Remove Duplicates', desc: 'Remove duplicate lines from your text.' },
+    { id: 'reverse-text', category: 'text', icon: RefreshCw, name: 'Reverse Text', desc: 'Flip your text backwards.' },
+    { id: 'binary-converter', category: 'text', icon: Binary, name: 'Binary Converter', desc: 'Convert text to binary and vice versa.' },
+    { id: 'json-formatter', category: 'text', icon: FileJson, name: 'JSON Formatter', desc: 'Format and minify JSON data.' },
+    { id: 'sql-formatter', category: 'text', icon: FileCode, name: 'SQL Formatter', desc: 'Format SQL queries for readability.' },
+    { id: 'extract-emails', category: 'text', icon: Type, name: 'Extract Emails', desc: 'Extract email addresses from any text.' },
+    { id: 'extract-urls', category: 'text', icon: Type, name: 'Extract URLs', desc: 'Extract website links from any text.' },
+    { id: 'text-to-morse', category: 'text', icon: Binary, name: 'Text to Morse', desc: 'Convert text to Morse code signals.' },
+    { id: 'morse-to-text', category: 'text', icon: Binary, name: 'Morse to Text', desc: 'Convert Morse code back to plain text.' },
+
+    // Converter Tools
+    { id: 'unit-converter', category: 'converter', icon: RefreshCw, name: 'Unit Converter', desc: 'Convert length, weight, and temperature.' },
+    { id: 'json-to-csv', category: 'converter', icon: FileJson, name: 'JSON to CSV', desc: 'Convert JSON data to CSV format.' },
+    { id: 'csv-to-json', category: 'converter', icon: FileCode, name: 'CSV to JSON', desc: 'Convert CSV data to JSON format.' },
+    { id: 'xml-to-json', category: 'converter', icon: FileCode, name: 'XML to JSON', desc: 'Convert XML data to JSON format.' },
+
+    // Utility Tools
+    { id: 'password-gen', category: 'utility', icon: Shield, name: 'Password Generator', desc: 'Create secure, random passwords.' },
+    { id: 'qr-generator', category: 'utility', icon: QrCode, name: 'QR Generator', desc: 'Create custom QR codes for URLs or text.' },
+    { id: 'qr-scanner', category: 'utility', icon: Scan, name: 'QR Scanner', desc: 'Scan and decode QR codes from images.' },
+    { id: 'age-calc', category: 'utility', icon: Calculator, name: 'Age Calculator', desc: 'Calculate your exact age from birth date.' },
+    { id: 'date-calc', category: 'utility', icon: Calendar, name: 'Date Calculator', desc: 'Calculate difference between dates or add days.' },
+    { id: 'url-shortener', category: 'utility', icon: Link, name: 'URL Shortener', desc: 'Create short, easy to share links.' },
+    { id: 'bmi-calc', category: 'utility', icon: Activity, name: 'BMI Calculator', desc: 'Calculate your Body Mass Index.' },
+  ], []);
+
+  const filteredTools = tools.filter(tool => {
+    const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         tool.desc.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeCategory === 'all' || tool.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
-      <Helmet>
-        <title>300+ Free Online Tools | AI, PDF, Image, Dev | e-Mitra Portal</title>
-        <meta name="description" content="Access 300+ free online tools. AI text generator, PDF editor, image converter, developer utilities, and more at e-Mitra Portal." />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Free Online Tools - e-Mitra Portal",
-            "description": "A collection of 300+ free online tools for PDF, images, AI, and development.",
-            "url": "https://emitraportal.vercel.app/tools.html",
-            "mainEntity": {
-              "@type": "ItemList",
-              "itemListElement": tools.slice(0, 10).map((tool, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "name": tool.name,
-                "description": tool.description,
-                "url": `https://emitraportal.vercel.app/tools/${tool.id}.html`
-              }))
-            }
-          })}
-        </script>
-      </Helmet>
-
       {/* Header Section */}
       <div className="text-center mb-16">
         <motion.h1 
@@ -503,7 +170,7 @@ const ToolsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight"
         >
-          Free Online <span className="text-indigo-600">Tools</span>
+          {t('tools.title')}
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: -10 }}
@@ -511,7 +178,7 @@ const ToolsPage = () => {
           transition={{ delay: 0.1 }}
           className="text-xl text-slate-500 max-w-2xl mx-auto"
         >
-          300+ professional tools for PDF, images, AI, and development. Fast, free, and secure.
+          {t('tools.subtitle')}
         </motion.p>
       </div>
 
@@ -521,7 +188,7 @@ const ToolsPage = () => {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
           <input
             type="text"
-            placeholder="Search for tools (e.g. merge pdf, ai text...)"
+            placeholder={t('tools.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none text-slate-700"
@@ -529,7 +196,7 @@ const ToolsPage = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-2">
-          {categories.map((cat) => {
+          {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             const isActive = activeCategory === cat.id;
             return (
@@ -543,7 +210,7 @@ const ToolsPage = () => {
                 }`}
               >
                 <Icon size={18} />
-                {cat.name}
+                {cat.id === 'all' ? (isHi ? 'सभी टूल्स' : 'All Tools') : t(`tools.categories.${cat.id}`)}
               </button>
             );
           })}
@@ -551,153 +218,173 @@ const ToolsPage = () => {
       </div>
 
       {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <AnimatePresence mode="popLayout">
-          {filteredTools.map((tool) => (
-            <motion.div
-              key={tool.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              whileHover={{ y: -5 }}
-              className="group bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 hover:border-indigo-100 transition-all duration-300 flex flex-col h-full"
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div className="p-4 bg-slate-50 rounded-2xl group-hover:bg-indigo-50 transition-colors">
-                  <tool.icon className="w-8 h-8 text-slate-600 group-hover:text-indigo-600" />
-                </div>
-                {tool.popular && (
-                  <span className="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-full flex items-center gap-1">
-                    <Star size={10} fill="currentColor" /> Popular
+          {filteredTools.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <motion.div
+                key={tool.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                whileHover={{ y: -5 }}
+                className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                    <Icon size={24} />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 px-2 py-1 rounded-md">
+                    {t(`tools.categories.${tool.category}`)}
                   </span>
-                )}
-              </div>
-              
-              <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                {tool.name}
-              </h3>
-              <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
-                {tool.description}
-              </p>
-              
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => openModal(tool.id, 'tool')}
-                  className="flex-1 bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-[0.98] flex items-center justify-center gap-2"
-                >
-                  Use Tool <ArrowRight size={16} />
-                </button>
-                <button
-                  onClick={() => openModal(tool.id, 'guide')}
-                  className="p-4 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 hover:text-slate-600 transition-all active:scale-95"
-                  title="View Guide"
-                >
-                  <FileText size={20} />
-                </button>
-              </div>
-            </motion.div>
-          ))}
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight">
+                  {tool.name}
+                </h3>
+                <p className="text-sm text-slate-500 mb-6 flex-grow">
+                  {tool.desc}
+                </p>
+                <div className="flex flex-col gap-2 mt-auto">
+                  <a
+                    href={`/tools/${tool.id}`}
+                    className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 group/btn"
+                  >
+                    {t('tools.useTool')}
+                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                  <a
+                    href={`/guides/${tool.id}`}
+                    className="w-full py-2 px-4 bg-white border border-slate-200 text-slate-600 hover:border-indigo-600 hover:text-indigo-600 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2"
+                  >
+                    <BookOpen size={14} /> {isHi ? 'गाइड देखें' : 'View Guide'}
+                  </a>
+                </div>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
 
-      {/* Modal System */}
+      {/* Tool Modal / Overlay */}
       <AnimatePresence>
         {selectedTool && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 bg-slate-900/60 backdrop-blur-sm"
-          >
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="bg-white w-full h-full md:h-[90vh] md:max-w-6xl md:rounded-[40px] shadow-2xl flex flex-col overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedTool(null)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between px-8 py-6 border-b border-slate-100 bg-white sticky top-0 z-10">
+              <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-10">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-indigo-50 rounded-xl">
-                    {tools.find(t => t.id === selectedTool)?.icon && (
-                      React.createElement(tools.find(t => t.id === selectedTool)!.icon, { className: "w-6 h-6 text-indigo-600" })
-                    )}
+                  <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                    {React.createElement(tools.find(t => t.id === selectedTool)?.icon || Wrench, { size: 20 })}
                   </div>
-                  <div>
-                    <h2 className="text-xl font-black text-slate-900 tracking-tight">
-                      {tools.find(t => t.id === selectedTool)?.name}
-                    </h2>
-                    <div className="flex gap-2 mt-1">
-                      <button 
-                        onClick={() => setModalMode('tool')}
-                        className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md transition-all ${modalMode === 'tool' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-indigo-600'}`}
-                      >
-                        Tool
-                      </button>
-                      <button 
-                        onClick={() => setModalMode('guide')}
-                        className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md transition-all ${modalMode === 'guide' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-indigo-600'}`}
-                      >
-                        Guide
-                      </button>
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-bold text-slate-900">
+                    {tools.find(t => t.id === selectedTool)?.name}
+                  </h2>
                 </div>
-                <button
-                  onClick={closeModal}
-                  className="p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-red-50 hover:text-red-500 transition-all active:scale-95"
+                <button 
+                  onClick={() => setSelectedTool(null)}
+                  className="p-2 hover:bg-slate-100 rounded-full transition-colors"
                 >
-                  <X size={24} />
+                  <Wrench size={20} className="rotate-45 text-slate-400" />
                 </button>
               </div>
-
-              {/* Modal Content */}
-              <div className="flex-grow overflow-y-auto p-8 custom-scrollbar bg-slate-50/30">
-                <div className="max-w-5xl mx-auto">
-                  {modalMode === 'tool' ? (
-                    <div className="bg-white p-8 md:p-12 rounded-[40px] border border-slate-100 shadow-sm">
-                      <ToolRenderer toolId={selectedTool} />
-                    </div>
-                  ) : (
-                    <GuideRenderer toolId={selectedTool} />
-                  )}
-                </div>
-              </div>
-
-              {/* Modal Footer */}
-              <div className="px-8 py-6 border-t border-slate-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2 text-slate-400 text-xs font-medium">
-                  <Shield size={14} /> 100% Secure & Private. Files are never stored.
-                </div>
-                <div className="flex items-center gap-3">
-                  <button className="flex items-center gap-2 px-6 py-3 bg-slate-50 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-100 transition-all">
-                    <Share2 size={16} /> Share
-                  </button>
-                  <button 
-                    onClick={closeModal}
-                    className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
-                  >
-                    Done
-                  </button>
-                </div>
+              
+              <div className="p-4 sm:p-8 overflow-y-auto">
+                <Suspense fallback={
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Loader2 className="animate-spin text-indigo-600 mb-4" size={32} />
+                    <p className="text-slate-500 font-medium">Loading tool...</p>
+                  </div>
+                }>
+                  <ToolRenderer toolId={selectedTool} />
+                </Suspense>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
-
-      {/* SEO Text Block */}
-      <div className="mt-20 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm">
-        <h2 className="text-2xl font-bold text-slate-900 mb-4">
-          Professional Online Tools for Everyone
-        </h2>
-        <p className="text-slate-600 leading-relaxed">
-          Our platform provides a comprehensive suite of free online tools designed to simplify your digital workflow. From powerful PDF manipulation and AI-driven content generation to essential developer utilities and image processing, we offer everything you need in one place. All our tools are fast, secure, and require no registration, ensuring your privacy while delivering high-quality results.
-        </p>
-      </div>
     </div>
   );
+};
+
+// Tool Renderer Component
+export const ToolRenderer = ({ toolId }: { toolId: string }) => {
+  switch (toolId) {
+    // PDF Tools
+    case 'merge-pdf': return <MergePDF />;
+    case 'split-pdf': return <SplitPDF />;
+    case 'rotate-pdf': return <RotatePDF />;
+    case 'compress-pdf': return <CompressPDF />;
+    case 'pdf-to-word': return <PDFtoWord />;
+    case 'word-to-pdf': return <WordtoPDF />;
+    case 'pdf-to-text': return <PDFtoText />;
+    case 'pdf-to-jpg': return <PDFtoJPG />;
+    case 'jpg-to-pdf': return <JPGtoPDF />;
+
+    // Image Tools
+    case 'image-compressor': return <ImageCompressor />;
+    case 'image-resizer': return <ImageResizer />;
+    case 'image-converter': return <ImageConverter />;
+    case 'image-filters': return <ImageFilters />;
+    case 'image-cropper': return <ImageCropper />;
+    case 'image-to-text': return <ImageToText />;
+    case 'image-to-base64': return <ImageToBase64 />;
+    case 'base64-to-image': return <Base64ToImage />;
+    case 'qr-generator': return <QRGenerator />;
+
+    // Text Tools
+    case 'word-counter': return <WordCounter />;
+    case 'case-converter': return <CaseConverter />;
+    case 'lorem-ipsum-generator': return <LoremIpsumGenerator />;
+    case 'text-to-speech': return <TextToSpeech />;
+    case 'remove-duplicate-lines': return <RemoveDuplicateLines />;
+    case 'reverse-text': return <ReverseText />;
+    case 'binary-converter': return <BinaryConverter />;
+    case 'json-formatter': return <JsonFormatter />;
+    case 'sql-formatter': return <SqlFormatter />;
+    case 'extract-emails': return <ExtractEmails />;
+    case 'extract-urls': return <ExtractURLs />;
+    case 'text-to-morse': return <TextToMorse />;
+    case 'morse-to-text': return <MorseToText />;
+
+    // Converter Tools
+    case 'unit-converter': return <UnitConverter />;
+    case 'json-to-csv': return <JsonCsvConverter mode="json-to-csv" />;
+    case 'csv-to-json': return <JsonCsvConverter mode="csv-to-json" />;
+    case 'xml-to-json': return <XmlJsonConverter mode="xml-to-json" />;
+
+    // Utility Tools
+    case 'password-gen': return <PasswordGenerator />;
+    case 'qr-generator': return <QRGenerator />;
+    case 'qr-scanner': return <QRScanner />;
+    case 'bmi-calc': return <BMICalculator />;
+    case 'age-calc': return <AgeCalculator />;
+    case 'date-calc': return <DateCalculator />;
+    case 'url-shortener': return <URLShortener />;
+    
+    default:
+      return (
+        <div className="text-center py-12">
+          <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Loader2 className="animate-spin" size={32} />
+          </div>
+          <h3 className="text-lg font-bold text-slate-900 mb-2">Tool Under Development</h3>
+          <p className="text-slate-500">This tool is being implemented. Please check back soon!</p>
+        </div>
+      );
+  }
 };
 
 export default ToolsPage;

@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { toolSEOContent } from '../data/toolSEOContent';
 import { ToolRenderer } from './ToolsPage';
 import { ArrowLeft, CheckCircle2, ShieldCheck, HelpCircle, PlayCircle, Loader2, BookOpen } from 'lucide-react';
-import Markdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 
 interface ToolPageProps {
@@ -17,7 +17,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     return (
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Tool Not Found</h1>
-        <p className="text-slate-600 mb-8">This tool is currently unavailable.</p>
+        <p className="text-slate-600 mb-8">The tool you are looking for does not exist.</p>
         <a href="/tools.html" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
@@ -95,7 +95,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
               </div>
             </div>
             <a 
-              href={`/guides/${toolId}.html`} 
+              href={`/guides/${toolId}`} 
               className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all"
             >
               View Guide
@@ -183,7 +183,7 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
               {content.relatedTools.map((tool, index) => (
                 <a 
                   key={index} 
-                  href={tool.link.endsWith('.html') ? tool.link : `${tool.link}.html`} 
+                  href={tool.link} 
                   className="px-6 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:border-indigo-600 hover:text-indigo-600 transition-all"
                 >
                   {tool.name}
