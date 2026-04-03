@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         {/* Brand */}
         <div className="space-y-6">
-          <a href="/" className="flex items-center gap-2 group">
+          <a href="/index.html" className="flex items-center gap-2 group">
             <div className="p-2 bg-indigo-600 rounded-lg text-white group-hover:rotate-12 transition-transform">
               <Globe size={24} />
             </div>

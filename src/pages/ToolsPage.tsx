@@ -481,7 +481,7 @@ const ToolsPage = () => {
             "@type": "WebPage",
             "name": "Free Online Tools - e-Mitra Portal",
             "description": "A collection of 300+ free online tools for PDF, images, AI, and development.",
-            "url": "https://emitraportal.vercel.app/tools",
+            "url": "https://emitraportal.vercel.app/tools.html",
             "mainEntity": {
               "@type": "ItemList",
               "itemListElement": tools.slice(0, 10).map((tool, index) => ({
@@ -489,7 +489,7 @@ const ToolsPage = () => {
                 "position": index + 1,
                 "name": tool.name,
                 "description": tool.description,
-                "url": `https://emitraportal.vercel.app/tools`
+                "url": `https://emitraportal.vercel.app/tools/${tool.id}.html`
               }))
             }
           })}

@@ -8,17 +8,17 @@ const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
 
   const navItems = [
-    { name: t('nav.home'), path: 'index.html' },
-    { name: t('nav.services'), path: 'services.html' },
-    { name: t('nav.forms'), path: 'forms.html' },
-    { name: t('nav.tools'), path: 'tools.html' },
-    { name: t('nav.contact'), path: 'contact.html' },
+    { name: t('nav.home'), path: '/index.html' },
+    { name: t('nav.services'), path: '/services.html' },
+    { name: t('nav.forms'), path: '/forms.html' },
+    { name: t('nav.tools'), path: '/tools.html' },
+    { name: t('nav.contact'), path: '/contact.html' },
   ];
 
   const isActive = (path: string) => {
     const pathname = window.location.pathname;
-    if (path === '/' && (pathname === '/' || pathname.endsWith('index.html'))) return true;
-    return pathname === `/${path}` || pathname.endsWith(`/${path}`) || pathname.endsWith(`/${path}.html`);
+    if (path === '/index.html' && (pathname === '/' || pathname === '/index.html' || pathname.endsWith('index.html'))) return true;
+    return pathname === path || pathname.endsWith(path);
   };
 
   return (
