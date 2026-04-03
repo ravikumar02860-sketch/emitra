@@ -566,7 +566,7 @@ function App() {
     content = <CategoryPage category="converter" />;
   } else if (pathname === '/utility-tools') {
     content = <CategoryPage category="utility" />;
-  } else if (pathname.includes('-tool.html') || (pathname.endsWith('-tool') && !pathname.includes('/'))) {
+  } else if (pathname.includes('-tool.html') || pathname.endsWith('-tool')) {
     const toolId = pathname.split('/').pop()?.replace('-tool.html', '').replace('-tool', '');
     content = <ToolSEOPage toolId={toolId} />;
   } else {

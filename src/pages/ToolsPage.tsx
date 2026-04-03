@@ -42,6 +42,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { useLanguage } from '../context/LanguageContext';
 
 // Tool Components Imports
 import { 
@@ -91,7 +92,8 @@ import {
   SqlFormatter, 
   ExtractEmails, 
   ExtractURLs, 
-  TextToMorse 
+  TextToMorse,
+  MorseToText 
 } from '../components/tools/TextTools';
 import { 
   UnitConverter,
@@ -176,6 +178,7 @@ const tools = [
   { id: 'extract-emails', name: 'Extract Emails', description: 'Find all email addresses from any block of text.', category: 'text', icon: Mail },
   { id: 'extract-urls', name: 'Extract URLs', description: 'Find all website links from any block of text.', category: 'text', icon: LinkIcon },
   { id: 'text-to-morse', name: 'Text to Morse', description: 'Convert text to Morse code and vice versa.', category: 'text', icon: Binary },
+  { id: 'morse-to-text', name: 'Morse to Text', description: 'Convert Morse code back to plain text.', category: 'text', icon: Binary },
 
   // Developer Tools
   { id: 'md5-hash', name: 'MD5 Generator', description: 'Generate secure MD5 hashes for your data.', category: 'dev', icon: Lock },
@@ -220,7 +223,9 @@ const tools = [
 
   // Converters (New)
   { id: 'json-to-csv', name: 'JSON to CSV', description: 'Convert JSON data to CSV format easily.', category: 'utility', icon: FileJson },
+  { id: 'csv-to-json', name: 'CSV to JSON', description: 'Convert CSV files to JSON format.', category: 'utility', icon: FileJson },
   { id: 'xml-to-json', name: 'XML to JSON', description: 'Convert XML documents to JSON format.', category: 'utility', icon: FileCode },
+  { id: 'json-to-xml', name: 'JSON to XML', description: 'Convert JSON data to XML format.', category: 'utility', icon: FileCode },
   { id: 'base64-to-image', name: 'Base64 to Image', description: 'Convert Base64 strings back to viewable images.', category: 'utility', icon: ImageIcon },
 ];
 
@@ -300,6 +305,7 @@ const ToolContent = ({ toolId }: { toolId: string }) => {
     case 'extract-emails': return <ExtractEmails />;
     case 'extract-urls': return <ExtractURLs />;
     case 'text-to-morse': return <TextToMorse />;
+    case 'morse-to-text': return <MorseToText />;
 
     // Image Tools
     case 'image-resizer': return <ImageResizer />;
@@ -356,7 +362,9 @@ const ToolContent = ({ toolId }: { toolId: string }) => {
 
     // Converters
     case 'json-to-csv': return <JsonCsvConverter mode="json-to-csv" />;
+    case 'csv-to-json': return <JsonCsvConverter mode="csv-to-json" />;
     case 'xml-to-json': return <XmlJsonConverter mode="xml-to-json" />;
+    case 'json-to-xml': return <XmlJsonConverter mode="json-to-xml" />;
     case 'base64-to-image': return <Base64ToImage />;
 
     default: return <div className="text-center py-12 text-slate-500">Tool coming soon...</div>;
