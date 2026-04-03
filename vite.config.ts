@@ -2,9 +2,24 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
+import { glob } from 'glob';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
+  
+  // Find all HTML files in root and tools directory
+  const rootHtmlFiles = glob.sync('*.html').reduce((acc, file) => {
+    const name = path.basename(file, '.html');
+    acc[name === 'index' ? 'main' : name] = path.resolve(__dirname, file);
+    return acc;
+  }, {} as Record<string, string>);
+
+  const toolsHtmlFiles = glob.sync('tools/*.html').reduce((acc, file) => {
+    const name = `tools/${path.basename(file, '.html')}`;
+    acc[name] = path.resolve(__dirname, file);
+    return acc;
+  }, {} as Record<string, string>);
+
   return {
     base: './',
     plugins: [react(), tailwindcss()],
@@ -14,12 +29,8 @@ export default defineConfig(({mode}) => {
     build: {
       rollupOptions: {
         input: {
-          main: path.resolve(__dirname, 'index.html'),
-          services: path.resolve(__dirname, 'services.html'),
-          forms: path.resolve(__dirname, 'forms.html'),
-          contact: path.resolve(__dirname, 'contact.html'),
-          jobs: path.resolve(__dirname, 'jobs.html'),
-          tools: path.resolve(__dirname, 'tools.html'),
+          ...rootHtmlFiles,
+          ...toolsHtmlFiles,
         },
         output: {
           manualChunks: {

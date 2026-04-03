@@ -22,6 +22,7 @@
     "dompurify": "^3.3.3",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
+    "glob": "^13.0.6",
     "html2canvas": "^1.4.1",
     "iban-validator": "^0.2.1",
     "js-yaml": "^4.1.1",

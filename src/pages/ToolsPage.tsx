@@ -457,11 +457,17 @@ const ToolsPage = () => {
     setSelectedTool(toolId);
     setModalMode(mode);
     document.body.style.overflow = 'hidden';
+    if (mode === 'tool') {
+      window.history.pushState({}, '', `/tools/${toolId}.html`);
+    } else {
+      window.history.pushState({}, '', `/guides/${toolId}.html`);
+    }
   };
 
   const closeModal = () => {
     setSelectedTool(null);
     document.body.style.overflow = 'auto';
+    window.history.pushState({}, '', '/tools.html');
   };
 
   return (

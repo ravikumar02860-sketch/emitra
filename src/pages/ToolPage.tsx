@@ -17,8 +17,8 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolId }) => {
     return (
       <div className="py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Tool Not Found</h1>
-        <p className="text-slate-600 mb-8">The tool you are looking for does not exist.</p>
-        <a href="/tools" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
+        <p className="text-slate-600 mb-8">This tool is currently unavailable.</p>
+        <a href="/tools.html" className="text-indigo-600 font-bold hover:underline">Go back to Tools</a>
       </div>
     );
   }

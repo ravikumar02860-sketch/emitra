@@ -8,11 +8,11 @@ const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
 
   const navItems = [
-    { name: t('nav.home'), path: '/' },
-    { name: t('nav.services'), path: 'services' },
-    { name: t('nav.forms'), path: 'forms' },
-    { name: t('nav.tools'), path: 'tools' },
-    { name: t('nav.contact'), path: 'contact' },
+    { name: t('nav.home'), path: 'index.html' },
+    { name: t('nav.services'), path: 'services.html' },
+    { name: t('nav.forms'), path: 'forms.html' },
+    { name: t('nav.tools'), path: 'tools.html' },
+    { name: t('nav.contact'), path: 'contact.html' },
   ];
 
   const isActive = (path: string) => {

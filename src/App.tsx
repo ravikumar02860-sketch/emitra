@@ -540,21 +540,21 @@ function App() {
   }, [pathname, hash]);
 
   let content;
-  if (pathname.endsWith('services.html') || pathname === '/services') {
+  if (pathname.endsWith('services.html') || pathname === '/services' || pathname === '/services.html') {
     content = <ServicesPage />;
-  } else if (pathname.endsWith('forms.html') || pathname === '/forms') {
+  } else if (pathname.endsWith('forms.html') || pathname === '/forms' || pathname === '/forms.html') {
     content = <FormsSection />;
-  } else if (pathname.endsWith('contact.html') || pathname === '/contact') {
+  } else if (pathname.endsWith('contact.html') || pathname === '/contact' || pathname === '/contact.html') {
     content = <ContactPage />;
-  } else if (pathname.endsWith('tools.html') || pathname === '/tools') {
+  } else if (pathname.endsWith('tools.html') || pathname === '/tools' || pathname === '/tools.html') {
     content = <ToolsPage />;
-  } else if (pathname.endsWith('jobs.html') || pathname === '/jobs') {
+  } else if (pathname.endsWith('jobs.html') || pathname === '/jobs' || pathname === '/jobs.html') {
     content = <Home />; // Default to Home if jobs page is not explicitly defined yet
   } else if (pathname.startsWith('/tools/')) {
-    const toolId = pathname.split('/').pop();
+    const toolId = pathname.split('/').pop()?.replace('.html', '');
     content = <ToolPage toolId={toolId} />;
   } else if (pathname.startsWith('/guides/')) {
-    const toolId = pathname.split('/').pop();
+    const toolId = pathname.split('/').pop()?.replace('.html', '');
     content = <GuidePage toolId={toolId} />;
   } else if (pathname === '/pdf-tools') {
     content = <CategoryPage category="pdf" />;
