@@ -133,20 +133,6 @@ import {
 } from '../components/tools/WebTools';
 import { toolSEOContent } from '../data/toolSEOContent';
 
-// Categories definition
-const categories = [
-  { id: 'all', name: 'All Tools', icon: Zap },
-  { id: 'pdf', name: 'PDF Tools', icon: FileText },
-  { id: 'image', name: 'Image Tools', icon: ImageIcon },
-  { id: 'ai', name: 'AI Tools', icon: Sparkles },
-  { id: 'text', name: 'Text & Content', icon: Type },
-  { id: 'dev', name: 'Developer', icon: Code },
-  { id: 'web', name: 'Web Tools', icon: Globe },
-  { id: 'security', name: 'Security', icon: Shield },
-  { id: 'social', name: 'Social Media', icon: Share2 },
-  { id: 'utility', name: 'Utility', icon: Settings },
-];
-
 // Tool definitions
 const tools = [
   // PDF Tools
@@ -430,10 +416,25 @@ const GuideRenderer = ({ toolId }: { toolId: string }) => {
 };
 
 const ToolsPage = () => {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
   const [modalMode, setModalMode] = useState<'tool' | 'guide'>('tool');
+
+  // Categories definition
+  const categories = [
+    { id: 'all', name: t('tools.categories.all') || 'All Tools', icon: Zap },
+    { id: 'pdf', name: t('tools.categories.pdf') || 'PDF Tools', icon: FileText },
+    { id: 'image', name: t('tools.categories.image') || 'Image Tools', icon: ImageIcon },
+    { id: 'ai', name: t('tools.categories.ai') || 'AI Tools', icon: Sparkles },
+    { id: 'text', name: t('tools.categories.text') || 'Text Tools', icon: Type },
+    { id: 'dev', name: t('tools.categories.dev') || 'Developer', icon: Code },
+    { id: 'web', name: t('tools.categories.web') || 'Web Tools', icon: Globe },
+    { id: 'security', name: t('tools.categories.security') || 'Security', icon: Shield },
+    { id: 'social', name: t('tools.categories.social') || 'Social Media', icon: Share2 },
+    { id: 'utility', name: t('tools.categories.utility') || 'Utility', icon: Settings },
+  ];
 
   const filteredTools = useMemo(() => {
     return tools.filter(tool => {

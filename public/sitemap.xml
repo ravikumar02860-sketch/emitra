@@ -8,14 +8,17 @@
 
 <url>
   <loc>https://emitraportal.vercel.app/services</loc>
+  <priority>0.8</priority>
 </url>
 
 <url>
   <loc>https://emitraportal.vercel.app/forms</loc>
+  <priority>0.8</priority>
 </url>
 
 <url>
   <loc>https://emitraportal.vercel.app/tools</loc>
+  <priority>0.9</priority>
 </url>
 
 <url>
